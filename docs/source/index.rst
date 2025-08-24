@@ -14,4 +14,4 @@ i2b2の日本語化と、 日本の医療情報システムとの連携方法を
    :maxdepth: 3
    :caption: Contents:
 
-   Dockerを使ったi2b2構築手順 <manual/docker_tutorial>
+   Dockerを使ったi2b2構築手順 <pages/manual/docker_tutorial>
