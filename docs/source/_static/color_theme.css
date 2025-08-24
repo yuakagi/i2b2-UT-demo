@@ -116,7 +116,7 @@ code, pre {
   color: #333 !important;
   font-family: 'Noto Serif JP', sans-serif;
   /* Show logo in the top bar on small/mobile view */
-  background-image: url("_static/logo.png");
+  background-image: url("../_static/logo.png");
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 120px auto;  /* adjust size */
