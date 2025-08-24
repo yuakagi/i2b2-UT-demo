@@ -7,4 +7,6 @@ RUN mkdir -p /var/log/postgresql && chown postgres:postgres /var/log/postgresql
 # postgresql.confをコンテナ内にコピーし、PostgreSQLの設定を上書きします
 COPY postgresql.conf /var/lib/postgresql/data/postgresql.conf
 
+# 以下に、PostgreSQL初回起動時に実行されるスクリプトを追加できます
+
 
