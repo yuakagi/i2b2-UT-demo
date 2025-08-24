@@ -45,7 +45,7 @@ html_css_files = [
 html_show_sphinx = False
 
 # -- Custom logo and theme options ------------------------------------------
-html_logo = "_static/logo.svg"
+html_logo = "_static/logo.png"
 html_theme_options = {
     "logo_only": True,  # Only show the logo (no title text)
     "display_version": False,  # Optional: hides the version string
