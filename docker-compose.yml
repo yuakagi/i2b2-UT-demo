@@ -7,6 +7,7 @@ services:
   # ––––––––––––––––––––––––––––––––––––––––––
   # i2b2 database (PostgreSQL)のコンテナ定義
   # ––––––––––––––––––––––––––––––––––––––––––
+  # i2b2は`i2b2`という名前のデータベースを使用し、その中にCellごとのスキーマを作成するというのが基本構成です。
   i2b2-data-pgsql:
     build:
       context: ./postgres
@@ -18,6 +19,8 @@ services:
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - I2B2_DB_NAME=${I2B2_DB_NAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_CONFIG_FILE=/var/lib/postgresql/data/postgresql.conf
     networks:
       - i2b2-net
@@ -37,43 +40,48 @@ services:
     container_name: i2b2-core-server
     restart: unless-stopped
     environment:
-      - DS_TYPE=${I2B2_DS_TYPE}
-
-      - DS_CRC_IP=${I2B2_DS_CRC_IP}
-      - DS_CRC_PORT=${I2B2_DS_CRC_PORT}
-      - DS_CRC_USER=${I2B2_DS_CRC_USER}
-      - DS_CRC_PASS=${I2B2_DS_CRC_PASS}
-      - DS_CRC_DB=${I2B2_DS_CRC_DB}
-      - DS_CRC_SCHEMA=${I2B2_DS_CRC_SCHEMA}
-
-      - DS_ONT_IP=${I2B2_DS_ONT_IP}
-      - DS_ONT_PORT=${I2B2_DS_ONT_PORT}
-      - DS_ONT_USER=${I2B2_DS_ONT_USER}
-      - DS_ONT_PASS=${I2B2_DS_ONT_PASS}
-      - DS_ONT_DB=${I2B2_DS_ONT_DB}
-      - DS_ONT_SCHEMA=${I2B2_DS_ONT_SCHEMA}
-
-      - DS_PM_IP=${I2B2_DS_PM_IP}
-      - DS_PM_PORT=${I2B2_DS_PM_PORT}
-      - DS_PM_USER=${I2B2_DS_PM_USER}
-      - DS_PM_PASS=${I2B2_DS_PM_PASS}
-      - DS_PM_DB=${I2B2_DS_PM_DB}
-      - DS_PM_SCHEMA=${I2B2_DS_PM_SCHEMA}
-
-      - DS_HIVE_IP=${I2B2_DS_HIVE_IP}
-      - DS_HIVE_PORT=${I2B2_DS_HIVE_PORT}
-      - DS_HIVE_USER=${I2B2_DS_HIVE_USER}
-      - DS_HIVE_PASS=${I2B2_DS_HIVE_PASS}
-      - DS_HIVE_DB=${I2B2_DS_HIVE_DB}
-      - DS_HIVE_SCHEMA=${I2B2_DS_HIVE_SCHEMA}
-
-      - DS_WD_IP=${I2B2_DS_WD_IP}
-      - DS_WD_PORT=${I2B2_DS_WD_PORT}
-      - DS_WD_USER=${I2B2_DS_WD_USER}
-      - DS_WD_PASS=${I2B2_DS_WD_PASS}
-      - DS_WD_DB=${I2B2_DS_WD_DB}
-      - DS_WD_SCHEMA=${I2B2_DS_WD_SCHEMA}
-
+      # NOTE: ユーザーが変更することを想定しない環境変数は.envでなく、ここで指定しています。
+      # i2b2のデータベースタイプ (i2b2自体はmysqlやoracleも対応しますが、ここではpostgresを使用します。変更しないでください。)
+      - DS_TYPE=postgres
+      # CRC cellの設定
+      - DS_CRC_IP=i2b2-data-pgsql # i2b2-data-pgsqlはPostgresコンテナのサービス名。docker network内で名前解決されます。
+      - DS_CRC_PORT=${POSTGRES_PORT}
+      - DS_CRC_USER=${POSTGRES_USER}
+      - DS_CRC_PASS=${POSTGRES_PASSWORD}
+      - DS_CRC_DB=${I2B2_DB_NAME}
+      - DS_CRC_SCHEMA=i2b2demodata
+      - I2B2_DS_CRC_DB_TYPE=pg
+      # ONT cellの設定
+      - DS_ONT_IP=i2b2-data-pgsql
+      - DS_ONT_PORT=${POSTGRES_PORT}
+      - DS_ONT_USER=${POSTGRES_USER}
+      - DS_ONT_PASS=${POSTGRES_PASSWORD}
+      - DS_ONT_DB=${I2B2_DB_NAME}
+      - DS_ONT_SCHEMA=i2b2metadata
+      - I2B2_DS_ONT_DB_TYPE=pg
+      # PM cellの設定
+      - DS_PM_IP=i2b2-data-pgsql
+      - DS_PM_PORT=${POSTGRES_PORT}
+      - DS_PM_USER=${POSTGRES_USER}
+      - DS_PM_PASS=${POSTGRES_PASSWORD}
+      - DS_PM_DB=${I2B2_DB_NAME}
+      - DS_PM_SCHEMA=i2b2pm
+      - I2B2_DS_PM_DB_TYPE=pg
+      # Hiveの設定
+      - DS_HIVE_IP=i2b2-data-pgsql
+      - DS_HIVE_PORT=${POSTGRES_PORT}
+      - DS_HIVE_USER=${POSTGRES_USER}
+      - DS_HIVE_PASS=${POSTGRES_PASSWORD}
+      - DS_HIVE_DB=${I2B2_DB_NAME}
+      - DS_HIVE_SCHEMA=i2b2hive
+      - I2B2_DS_HIVE_DB_TYPE=pg
+      # Workdataの設定
+      - DS_WD_IP=i2b2-data-pgsql
+      - DS_WD_PORT=${POSTGRES_PORT}
+      - DS_WD_USER=${POSTGRES_USER}
+      - DS_WD_PASS=${POSTGRES_PASSWORD}
+      - DS_WD_DB=${I2B2_DB_NAME}
+      - DS_WD_SCHEMA=i2b2workdata
     networks:
       - i2b2-net
     depends_on:
@@ -86,10 +94,9 @@ services:
     image: i2b2/i2b2-webclient:${I2B2_WEBCLIENT_TAG}
     container_name: i2b2-webclient
     restart: unless-stopped
-    # ⚠️ Webclient公開用のポートを必ずここで適切に設定してください！
+    # WebClientのポート設定
     ports:
-      - "8091:80"
-      # - "444:443"
+      - ${WEBCLIENT_PORT}:80"
     command: /run-httpd.sh localhost
     depends_on:
       - i2b2-core-server
@@ -108,5 +115,6 @@ networks:
 # Docker Volume 定義
 # –––––––––––––––––––––––––––––––––––––––
 volumes:
+  # ⚠️ PostgresのデータはこのDockerボリュームに保存されます。
   pgdata:
     driver: local
