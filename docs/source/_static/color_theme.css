@@ -110,22 +110,24 @@ code, pre {
   color: #000 !important;
 }
 
-/* Mobile header */
+/* Mobile header logo replacement */
 .wy-nav-top {
-  background-color: #e3e0cd !important;
+  background-color: #e3e0cd !important;  /* keep your background */
   color: #333 !important;
   font-family: 'Noto Serif JP', sans-serif;
-  /* Show logo in the top bar on small/mobile view */
-  display: block;
-  width: 140px;              /* adjust to your logo width */
-  height: 40px;              /* adjust to your logo height */
-  background: url("../_static/logo.png") no-repeat center;
-  background-size: contain;
-  text-indent: -9999px;      /* hide the text "i2b2-jp" */
-  overflow: hidden;
-  margin: 0 auto;            /* keep it centered */
 }
 
+/* Replace the project title text with the logo */
+.wy-nav-top a {
+  display: block;
+  width: 140px;              /* logo width */
+  height: 40px;              /* logo height */
+  background: url("../_static/logo.png") no-repeat center;
+  background-size: contain;
+  text-indent: -9999px;      /* hide text (page name, by default) */
+  overflow: hidden;
+  margin: 0 auto;            /* center horizontally */
+}
 .wy-nav-top a,
 .wy-nav-top a:visited {
   color: #333 !important;
