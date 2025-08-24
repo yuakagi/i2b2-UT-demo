@@ -1,0 +1,112 @@
+# ****************************************
+# * docker-compose.yml for i2b2 server   *
+# * 環境変数は.envファイルに記入します        *
+# ****************************************
+
+services:
+  # ––––––––––––––––––––––––––––––––––––––––––
+  # i2b2 database (PostgreSQL)のコンテナ定義
+  # ––––––––––––––––––––––––––––––––––––––––––
+  i2b2-data-pgsql:
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+      args:
+        # i2b2 postgresのイメージタグ(バージョン)を指定。.envで指定した値が使われます。
+        I2B2_DATA_PGSQL_TAG: ${I2B2_DATA_PGSQL_TAG}
+    container_name: i2b2-data-pgsql
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_CONFIG_FILE=/var/lib/postgresql/data/postgresql.conf
+    networks:
+      - i2b2-net
+    # Postgresのデータを永続化するためのDockerボリュームをマウントします
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # ⚠️ Postgresのポート設定
+    # (セキュリティ上の理由で公開しない、5432以外を使用するなどの場合、ここを変更してください。)
+    ports:
+      - 5432:5432
+
+  # ––––––––––––––––––––––––––––––––––––––––––––––
+  # i2b2 backend coreサーバーのコンテナ定義
+  # ––––––––––––––––––––––––––––––––––––––––––––––
+  i2b2-core-server:
+    image: i2b2/i2b2-core-server:${I2B2_CORE_SERVER_TAG}
+    container_name: i2b2-core-server
+    restart: unless-stopped
+    environment:
+      - DS_TYPE=${I2B2_DS_TYPE}
+
+      - DS_CRC_IP=${I2B2_DS_CRC_IP}
+      - DS_CRC_PORT=${I2B2_DS_CRC_PORT}
+      - DS_CRC_USER=${I2B2_DS_CRC_USER}
+      - DS_CRC_PASS=${I2B2_DS_CRC_PASS}
+      - DS_CRC_DB=${I2B2_DS_CRC_DB}
+      - DS_CRC_SCHEMA=${I2B2_DS_CRC_SCHEMA}
+
+      - DS_ONT_IP=${I2B2_DS_ONT_IP}
+      - DS_ONT_PORT=${I2B2_DS_ONT_PORT}
+      - DS_ONT_USER=${I2B2_DS_ONT_USER}
+      - DS_ONT_PASS=${I2B2_DS_ONT_PASS}
+      - DS_ONT_DB=${I2B2_DS_ONT_DB}
+      - DS_ONT_SCHEMA=${I2B2_DS_ONT_SCHEMA}
+
+      - DS_PM_IP=${I2B2_DS_PM_IP}
+      - DS_PM_PORT=${I2B2_DS_PM_PORT}
+      - DS_PM_USER=${I2B2_DS_PM_USER}
+      - DS_PM_PASS=${I2B2_DS_PM_PASS}
+      - DS_PM_DB=${I2B2_DS_PM_DB}
+      - DS_PM_SCHEMA=${I2B2_DS_PM_SCHEMA}
+
+      - DS_HIVE_IP=${I2B2_DS_HIVE_IP}
+      - DS_HIVE_PORT=${I2B2_DS_HIVE_PORT}
+      - DS_HIVE_USER=${I2B2_DS_HIVE_USER}
+      - DS_HIVE_PASS=${I2B2_DS_HIVE_PASS}
+      - DS_HIVE_DB=${I2B2_DS_HIVE_DB}
+      - DS_HIVE_SCHEMA=${I2B2_DS_HIVE_SCHEMA}
+
+      - DS_WD_IP=${I2B2_DS_WD_IP}
+      - DS_WD_PORT=${I2B2_DS_WD_PORT}
+      - DS_WD_USER=${I2B2_DS_WD_USER}
+      - DS_WD_PASS=${I2B2_DS_WD_PASS}
+      - DS_WD_DB=${I2B2_DS_WD_DB}
+      - DS_WD_SCHEMA=${I2B2_DS_WD_SCHEMA}
+
+    networks:
+      - i2b2-net
+    depends_on:
+      - i2b2-data-pgsql
+
+  # ––––––––––––––––––––––––––––––––––––––––––
+  # i2b2-wbclientのコンテナ定義
+  # ––––––––––––––––––––––––––––––––––––––––––
+  i2b2-webclient:
+    image: i2b2/i2b2-webclient:${I2B2_WEBCLIENT_TAG}
+    container_name: i2b2-webclient
+    restart: unless-stopped
+    # ⚠️ Webclient公開用のポートを必ずここで適切に設定してください！
+    ports:
+      - "8091:80"
+      # - "444:443"
+    command: /run-httpd.sh localhost
+    depends_on:
+      - i2b2-core-server
+    networks:
+      - i2b2-net
+
+# –––––––––––––––––––––––––––––––––––––––
+# Docker Network 定義
+# –––––––––––––––––––––––––––––––––––––––
+networks:
+  i2b2-net:
+    name: i2b2-net
+    driver: bridge
+
+# –––––––––––––––––––––––––––––––––––––––
+# Docker Volume 定義
+# –––––––––––––––––––––––––––––––––––––––
+volumes:
+  pgdata:
+    driver: local
