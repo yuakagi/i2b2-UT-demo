@@ -111,12 +111,11 @@ code, pre {
 }
 
 /* Mobile header */
-
-.wy-nav-top a {
+.wy-nav-top {
   background-color: #e3e0cd !important;
   color: #333 !important;
   font-family: 'Noto Serif JP', sans-serif;
-  /* Replace project title with logo in the mobile top bar */
+  /* Show logo in the top bar on small/mobile view */
   display: block;
   width: 140px;              /* adjust to your logo width */
   height: 40px;              /* adjust to your logo height */
