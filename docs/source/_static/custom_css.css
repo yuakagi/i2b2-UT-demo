@@ -142,28 +142,29 @@ code, pre {
 
 /* Sticky top bar on small screens */
 /* ---------- Mobile header: centered logo, small clickable area, sticky ---------- */
+/* ---------- Mobile header: centered logo, small clickable area, sticky ---------- */
 @media (max-width: 768px) {
-  /* Center contents of the top bar without making the link full-width */
   .wy-nav-top {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 3000;
-    display: flex;                /* center the logo */
+    display: flex;
     align-items: center;
     justify-content: center;
-    height: 45px;                 /* explicit height helps layout math */
+    height: 45px;
   }
 
-  /* Only the logo is clickable */
+  /* Only the logo is clickable (bounded width, no distortion) */
   .wy-nav-top a {
-    display: inline-block;        /* prevents full-bar click */
-    width: auto;                 /* logo box */
-    height: 45px;
-    background: url("../_static/logo.svg") no-repeat center / contain;
+    display: inline-block;
+    inline-size: min(160px, 60vw);   /* <= small, responsive box */
+    block-size: 45px;                /* match bar height */
+    background: url("../_static/images/logos/logo.svg") no-repeat center / contain !important;
     text-indent: -9999px;
     overflow: hidden;
-    margin: 0;                    /* flex handles centering */
+    margin: 0;
+    padding: 0;                       /* neutralize theme padding */
   }
 
   /* Keep hamburger reachable on the left */
@@ -173,7 +174,7 @@ code, pre {
     left: 12px;
   }
 
-  /* Ancestor resets (required for sticky on iOS Safari) */
+  /* Ancestor resets for sticky on iOS */
   .wy-body-for-nav,
   .wy-grid-for-nav,
   .wy-nav-content-wrap {
@@ -182,29 +183,19 @@ code, pre {
     -webkit-transform: none !important;
   }
 
-  /* Prevent content from hiding under the bar */
-  .wy-nav-content { padding-top: 58px; } /* ≈ 45px + buffer */
+  /* Keep content below the bar */
+  .wy-nav-content { padding-top: 58px; }
 }
 
-/* ---------- iOS-only fallback: if sticky still fails, use fixed ---------- */
+/* ---------- iOS-only fixed fallback (if Safari still flakes) ---------- */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 768px) {
-    .wy-nav-top {
-      position: fixed !important;         /* bulletproof on iPhone/iPad */
-      top: env(safe-area-inset-top, 0);
-      left: 0;
-      right: 0;
-      z-index: 4000;
-    }
-    .wy-nav-content {
-      padding-top: calc(45px + env(safe-area-inset-top, 0));
-    }
-    /* Slide-out sidebar should start below the fixed bar (some RTD builds) */
-    .wy-nav-side {
-      top: calc(45px + env(safe-area-inset-top, 0)) !important;
-    }
+    .wy-nav-top { position: fixed !important; top: env(safe-area-inset-top, 0); left: 0; right: 0; z-index: 4000; }
+    .wy-nav-content { padding-top: calc(45px + env(safe-area-inset-top, 0)); }
+    .wy-nav-side { top: calc(45px + env(safe-area-inset-top, 0)) !important; }
   }
 }
+
 
 
 
