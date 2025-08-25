@@ -8,33 +8,9 @@
 | 国内のユーザーがすぐにi2b2を実装できるように、GitHubリポジトリ `i2b2-jp <https://github.com/yuakagi/i2b2-jp>`_ を作成しました。このページでは、このリポジトリを利用してi2b2サーバーを構築する手順を説明します。
 
 .. note::
+    
       - i2b2は継続的に開発が進んでおり、バージョンアップに伴い大幅に内容が変わる可能性があります。当面の間、このマニュアルは2025年8月時点での最新の **i2b2 version 1.8.x** を対象とし維持開発します。
       - 細かな設定が必要で、このリポジトリでは対応しきれない場合、 `i2b2 Community Wiki <https://community.i2b2.org/wiki/>`_ に詳細なinstallation guideが公開されていますので、そちらを参照してください。
-
-.. warning::
-      - Dockerはデフォルトではimageおよびvolumeをルートパーティションに保存します。i2b2のデータベースは大きくなる可能性があるため、ルートパーティションが枯渇してシステムの重大な障害を引き起こす可能性があります。
-      - Dockerのデフォルトの保存場所(data-root)を変更するか、Postgresのデータを保存するDockerボリュームを別のパーティションにマウントすることを強くお勧めします。
-      - 例えば、Dockerの設定ファイル `/etc/docker/daemon.json` に以下のように記述して、data-rootを変更できます:
-
-         .. code-block:: json
-
-            {
-              "data-root": "/path/to/your/docker_data"
-            }
-
-      - また、Postgresのデータを保存するDockerボリュームを別のパーティションにマウントするには、 `docker-compose.yml` の `pgdata` ボリュームの定義を以下のように変更します:   
-
-         .. code-block:: yaml
-
-            volumes:
-              pgdata:
-                driver: local
-                driver_opts:
-                  type: none
-                  device: /path/to/your/mount_point
-                  o: bind
-      - ここで、`/path/to/your/docker_data` および `/path/to/your/mount_point` は、実際のパスに置き換えてください。
-      - 詳細は、Dockerの公式ドキュメントを参照してください。
 
 以下の手順通りにに進めば、i2b2サーバーを起動できます。
 
@@ -68,7 +44,7 @@
 
 | i2b2サーバー実装にあたって確認が望ましい項目があります。以下のページを一度ご覧ください。
 
-:doc:`Dockerの重要な設定について <./docker_info>`
+:doc:`Dockerの重要な設定について <./important_docker_settings/important_docker_settings>`
 
 | 必要に応じてDockerの設定を変更してください。
          

@@ -38,7 +38,6 @@ You can access to the DB by IP, port, username and password
 2. Access to the DB using your IP and port
 3. Authenticate with your username and password. The default user is 'i2b2' and password is 'demouser'.
 
-
 # Other notes (from the original repo)
 username is demo
 password is i2b2cdiDemo@2020
