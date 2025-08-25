@@ -120,10 +120,11 @@ code, pre {
   font-family: 'Noto Serif JP', sans-serif;
 }
 /* Replace the project title text with the logo for small screen navbar*/
+/* SVG is not supported for logo without specifying sizes */
 .wy-nav-top a {
   display: block;
-  width: 140px;              /* logo width */
-  height: 40px;              /* logo height */
+  width: auto;              /* logo width */
+  height: 50px;              /* logo height */
   background: url("../_static/logo.svg") no-repeat center;
   background-size: contain;
   text-indent: -9999px;      /* hide text (page name, by default) */
