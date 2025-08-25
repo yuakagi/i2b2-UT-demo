@@ -56,7 +56,11 @@ code, pre {
 }
 /* Force logo size for both sidebar  */
 .wy-side-nav-search .logo img,
-.wy-side-nav-search__logo img,
+.wy-side-nav-search__logo img {
+  height: 45px;   /* pick your size */
+  width: auto;
+  display: block;
+}
 
 .wy-side-nav-search {
   background-color: var(--bg-1) !important;
@@ -124,7 +128,7 @@ code, pre {
 .wy-nav-top a {
   display: block;
   width: auto;              /* logo width */
-  height: 50px;              /* logo height */
+  height: 45px;              /* logo height */
   background: url("../_static/logo.svg") no-repeat center;
   background-size: contain;
   text-indent: -9999px;      /* hide text (page name, by default) */

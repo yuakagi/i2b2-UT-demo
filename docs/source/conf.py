@@ -46,7 +46,7 @@ html_show_sphinx = False
 
 # -- Custom logo and theme options ------------------------------------------
 html_logo = "_static/logo.svg"
-html_favicon = '_static/favicon.svg'
+html_favicon = '_static/favicon.png'
 html_theme_options = {
     "logo_only": True,  # Only show the logo (no title text)
     "display_version": False,  # Optional: hides the version string
