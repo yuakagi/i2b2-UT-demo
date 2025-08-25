@@ -1,7 +1,12 @@
 
 ***********************************
-🐳 Dockerの重要な設定について
+Dockerの重要な設定について
 ***********************************
+
+.. figure:: /_static/images/common_images/docker_logos/docker-logo-blue.svg
+   :alt: Docker Logo
+   :width: 400px
+   :align: left
 
 | Dockerの設定は複雑なので、全てはここでカバーできませんが、i2b2サーバーの実装にあたって確認が望ましい項目があります。このページでは、特に重要な設定について説明します。
 
