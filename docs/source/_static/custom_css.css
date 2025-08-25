@@ -171,6 +171,8 @@ pre {
   /* Keep hamburger reachable on the left */
   .wy-nav-top .fa-bars,
   .wy-nav-top .wy-nav-top-toggle {
+    position: absolute;
+    left: 12px;
     color: #333 !important;
     /* dark gray/black */
   }

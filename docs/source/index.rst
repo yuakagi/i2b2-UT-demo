@@ -19,7 +19,7 @@ i2b2 Japan
  
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
+   :caption: 目次:
 
    各種実装マニュアル <pages/manual/manual>
    i2b2を構築・実装する(docker編) <pages/manual/deploy_i2b2_with_docker/deploy_i2b2_with_docker>
