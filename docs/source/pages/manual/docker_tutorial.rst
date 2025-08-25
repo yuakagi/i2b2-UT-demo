@@ -67,7 +67,9 @@
 ----------------------
 
 | i2b2サーバー実装にあたって確認が望ましい項目があります。以下のページを一度ご覧ください。
-| :doc:`Dockerの重要な設定について <pages/manual/docker_info>`
+
+:doc:`Dockerの重要な設定について <pages/manual/docker_info>`
+
 | 必要に応じてDockerの設定を変更してください。
          
 2. リポジトリのクローン
