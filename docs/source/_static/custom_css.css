@@ -55,12 +55,14 @@ code, pre {
   font-family: 'Noto Serif JP', sans-serif;
 }
 /* Force logo size for both sidebar  */
-.wy-side-nav-search .logo img,
-.wy-side-nav-search__logo img {
-  height: 45px;   /* pick your size */
+.wy-side-nav-search__logo img,
+.wy-side-nav-search__logo svg { 
+  height: 45px;
   width: auto;
   display: block;
+  max-width: 100%;
 }
+
 
 .wy-side-nav-search {
   background-color: var(--bg-1) !important;
