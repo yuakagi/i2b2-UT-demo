@@ -6,7 +6,6 @@ i2b2関連のリンク集
 .. figure:: /_static/images/pages/links/links_adobestock_normal_lisence_20250825.svg
    :alt: i2b2 Links
    :width: 400px
-   :align: left
 
 | i2b2の情報収集に役立つリンク集をまとめます。
 
