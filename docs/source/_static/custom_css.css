@@ -123,25 +123,8 @@ code, pre {
   color: #000 !important;
 }
 
-/* Mobile header logo replacement */
-.wy-nav-top {
-  background-color: #e3e0cd !important;  /* keep your background */
-  color: #333 !important;
-  font-family: 'Noto Serif JP', sans-serif;
-}
-.wy-nav-top a,
-.wy-nav-top a:visited {
-  color: #333 !important;
-  font-weight: bold;
-  text-decoration: none;
-}
-.wy-nav-top a:hover {
-  color: #000 !important;
-  text-decoration: underline;
-}
 
 /* Sticky top bar on small screens */
-/* ---------- Mobile header: centered logo, small clickable area, sticky ---------- */
 /* ---------- Mobile header: centered logo, small clickable area, sticky ---------- */
 @media (max-width: 768px) {
   .wy-nav-top {
@@ -153,18 +136,20 @@ code, pre {
     align-items: center;
     justify-content: center;
     height: 45px;
+    background-color: #e3e0cd;           /* keep your bar color here (mobile only) */
+    border-bottom: 1px solid var(--bg-2); /* thin bottom line in your palette */
   }
 
   /* Only the logo is clickable (bounded width, no distortion) */
   .wy-nav-top a {
     display: inline-block;
-    inline-size: min(160px, 60vw);   /* <= small, responsive box */
-    block-size: 45px;                /* match bar height */
-    background: url("../_static/images/logos/logo.svg") no-repeat center / contain !important;
+    inline-size: min(160px, 60vw);       /* narrow, responsive click area */
+    block-size: 45px;                    /* match bar height */
+    background: url("../_static/images/logos/logo.svg") no-repeat center / contain !important; /* <-- path check */
     text-indent: -9999px;
     overflow: hidden;
     margin: 0;
-    padding: 0;                       /* neutralize theme padding */
+    padding: 0;                          /* neutralize theme padding */
   }
 
   /* Keep hamburger reachable on the left */
@@ -190,11 +175,17 @@ code, pre {
 /* ---------- iOS-only fixed fallback (if Safari still flakes) ---------- */
 @supports (-webkit-touch-callout: none) {
   @media (max-width: 768px) {
-    .wy-nav-top { position: fixed !important; top: env(safe-area-inset-top, 0); left: 0; right: 0; z-index: 4000; }
+    .wy-nav-top {
+      position: fixed !important;
+      top: env(safe-area-inset-top, 0);
+      left: 0; right: 0;
+      z-index: 4000;
+    }
     .wy-nav-content { padding-top: calc(45px + env(safe-area-inset-top, 0)); }
     .wy-nav-side { top: calc(45px + env(safe-area-inset-top, 0)) !important; }
   }
 }
+
 
 
 

@@ -4,7 +4,7 @@ i2b2 Japan
 .. image:: /_static/images/common_images/welcome_adobestock_normal_lisence_20250825.png
    :alt: Welcome to i2b2 Japan
    :width: 400px
-   :align: center
+   :align: left
 
 このページの管理するGitHubはこちらから 👉 https://github.com/yuakagi/i2b2-jp
 
