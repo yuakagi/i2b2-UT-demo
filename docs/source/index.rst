@@ -6,7 +6,7 @@ GitHub 👉 https://github.com/yuakagi/i2b2-jp
 
 | `i2b2 <https://www.i2b2.org/>`_ は、米国で開発されたオープンソースの臨床データ管理システムです。 
 
-| 日本の医療機関での利用を促進するために、i2b2ドキュメントの日本語化と、 日本の医療情報システムとの連携方法をまとめます。
+| 日本の医療機関での利用を促進するために、i2b2ドキュメント、および日本の医療情報システムとi2b2の連携方法をまとめます。
 
 | i2b2サーバーを構築・デプロイするためのGitHubリポジトリも提供します。これを使えば数分もあればi2b2サーバーを立ち上げることができるので、ぜひお試しください。
 
@@ -19,4 +19,4 @@ GitHub 👉 https://github.com/yuakagi/i2b2-jp
    :maxdepth: 3
    :caption: Contents:
 
-   Dockerを使ったi2b2構築手順 <pages/manual/docker_tutorial>
+   i2b2を構築・実装する(docker編) <pages/manual/docker_tutorial>

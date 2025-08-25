@@ -11,8 +11,8 @@ sys.path.insert(0, os.path.abspath("../.."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "i2b2-jp"
-copyright = "2025, Yu Akagi, MD"
-author = "Yu Akagi, and i2b2 Japanese collaboration members"
+copyright = "2025–present, University of Tokyo Hospital, Department of Healthcare Information Management"
+author = "University of Tokyo Hospital, Department of Healthcare Information Management, and i2b2 Japanese collaboration members"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
