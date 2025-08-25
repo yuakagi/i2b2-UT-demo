@@ -132,7 +132,7 @@ code, pre {
 /* Replace the project title text with the logo for small screen navbar*/
 /* SVG is not supported for logo without specifying sizes */
 .wy-nav-top a {
-  display: block;
+  display: inline-block; 
   width: auto;              /* logo width */
   height: 45px;              /* logo height */
   background: url("../_static/logo.svg") no-repeat center;
@@ -161,7 +161,7 @@ code, pre {
     top: 0;
     z-index: 3000;    /* above version/search drawers */
   }
-
+  
   /* 1) Sticky prerequisites: no overflow/transform on ancestors */
   .wy-body-for-nav,
   .wy-grid-for-nav,
@@ -179,6 +179,8 @@ code, pre {
   /* 3) iOS notches (optional) */
   body { padding-top: env(safe-area-inset-top); }
 }
+
+
 
 /* ======================================================
    Function Boxes and Admonitions
