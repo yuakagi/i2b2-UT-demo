@@ -122,7 +122,7 @@ code, pre {
   display: block;
   width: 140px;              /* logo width */
   height: 40px;              /* logo height */
-  background: url("../_static/logo.png") no-repeat center;
+  background: url("../_static/logo.svg") no-repeat center;
   background-size: contain;
   text-indent: -9999px;      /* hide text (page name, by default) */
   overflow: hidden;
@@ -138,8 +138,14 @@ code, pre {
   color: #000 !important;
   text-decoration: underline;
 }
-
-
+/* Make top navbar sticky on small screens */
+@media screen and (max-width: 768px) {
+  .wy-nav-top {
+    position: sticky;
+    top: 0;
+    z-index: 1000;   /* keep it above page content */
+  }
+}
 
 /* ======================================================
    Function Boxes and Admonitions
