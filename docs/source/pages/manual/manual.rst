@@ -16,5 +16,8 @@
 2. i2b2公式の手順でコンテナを使わずにi2b2を構築する方法
 =================================================
 
-| Dockerを使わずに、i2b2公式の手順でi2b2を構築する方法 (i2b2 Community Wikiへのリンクです。)
 `i2b2公式の実装手順 <https://community.i2b2.org/wiki/display/getstarted/i2b2+Installation+Guide>`_
+
+| i2b2 Community Wikiへのリンクです。外部サイトへ移動します。
+| Dockerを使った実装が簡単で便利ですが、どうしてもコンテナでは設定が難しい場合や、i2b2の仕組みを深く理解したい場合には、こちらの手順でi2b2を構築することも可能です。
+

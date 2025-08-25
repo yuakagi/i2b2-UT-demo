@@ -6,6 +6,7 @@ i2b2 Japan
    :width: 400px
    :align: left
 
+
 このページの管理するGitHubはこちらから 👉 https://github.com/yuakagi/i2b2-jp
 
 
@@ -15,8 +16,6 @@ i2b2 Japan
 | 現在、東京大学医学部附属病院企画情報運営部のメンバーが中心となってこのプロジェクトを進めています。
 
 
-
- 
 .. toctree::
    :maxdepth: 3
    :caption: 目次:

@@ -3,6 +3,12 @@
 🐳 Dockerを使ってi2b2サーバーを構築する
 ***********************************
 
+.. figure:: /_static/images/common_images/docker_logos/docker-logo-blue.svg
+   :alt: Docker Logo
+   :width: 400px
+   :align: left
+
+   
 | Dockerを利用することで、複雑な設定を簡素化し、数分もあればi2b2サーバーを立ち上げられます。
 | i2b2がいくつか `公式のDockerイメージ <https://hub.docker.com/u/i2b2/>`_ を提供しています。これらを組み合わせて利用することで、i2b2サーバーを構築できます。 
 | 国内のユーザーがすぐにi2b2を実装できるように、GitHubリポジトリ `i2b2-jp <https://github.com/yuakagi/i2b2-jp>`_ を作成しました。このページでは、このリポジトリを利用してi2b2サーバーを構築する手順を説明します。
