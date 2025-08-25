@@ -3,9 +3,10 @@
 i2b2関連のリンク集
 ***********************************
 
-.. image:: ./links_adobestock_normal_lisence_20250825.svg
+.. image:: .../images/links/links_adobestock_normal_lisence_20250825.svg
+    ./links_adobestock_normal_lisence_20250825.svg
    :alt: Docker settings illustration
-   :width: 100%
+   :width: 800px
    :align: center
 
 

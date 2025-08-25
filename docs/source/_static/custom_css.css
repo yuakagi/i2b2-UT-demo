@@ -197,6 +197,9 @@ code, pre {
 
   /* Prevent content from hiding under the sticky bar */
   .wy-nav-content { padding-top: 58px; }
+
+  /* iOS notches (optional) */
+  body { padding-top: env(safe-area-inset-top); }
 }
 
 

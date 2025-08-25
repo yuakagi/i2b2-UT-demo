@@ -1,6 +1,11 @@
 i2b2 Japan
 ================
 
+.. image:: ./welcome_adobestock_normal_lisence_20250825.png
+   :alt: i2b2 Japan logo
+   :width: 100%
+   :align: center
+
 このページの管理するGitHubはこちらから 👉 https://github.com/yuakagi/i2b2-jp
 
 
@@ -16,6 +21,6 @@ i2b2 Japan
    :maxdepth: 3
    :caption: Contents:
 
-   各種実装マニュアル <ages/manual/manual>
+   各種実装マニュアル <pages/manual/manual>
    i2b2を構築・実装する(docker編) <pages/manual/deploy_i2b2_with_docker/deploy_i2b2_with_docker>
    役立つリンク集 <pages/links/links>
