@@ -146,25 +146,33 @@ code, pre {
   text-decoration: underline;
 }
 
-/* Sticky top bar on small screens (your rule, with a higher z-index) */
+/* Sticky top bar on small screens */
 @media (max-width: 768px) {
-    .wy-nav-top {
-      position: sticky;
-      top: 0;
-      z-index: 2000; /* was 1000; keep it above search/version widgets */
-    }
-
-    /* Add space so content doesn't hide behind the sticky bar */
-    .wy-nav-content {
-      padding-top: 48px; /* match your .wy-nav-top height (40px) + a little buffer */
-    }
-
-    /* iOS safe-area support (not required, nice to have) */
-    body {
-      padding-top: env(safe-area-inset-top);
-    }
+  /* Safari-friendly sticky */
+  .wy-nav-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 3000;    /* above version/search drawers */
   }
 
+  /* 1) Sticky prerequisites: no overflow/transform on ancestors */
+  .wy-body-for-nav,
+  .wy-grid-for-nav,
+  .wy-nav-content-wrap {
+    overflow: visible !important;
+    transform: none !important;     /* Safari treats transformed ancestors as containing blocks */
+    -webkit-transform: none !important;
+  }
+
+  /* 2) Keep content from sliding under the bar */
+  .wy-nav-content {
+    padding-top: 58px;  /* ≈ header height + buffer */
+  }
+
+  /* 3) iOS notches (optional) */
+  body { padding-top: env(safe-area-inset-top); }
+}
 
 /* ======================================================
    Function Boxes and Admonitions
