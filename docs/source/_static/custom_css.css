@@ -132,7 +132,7 @@ code, pre {
 /* Replace the project title text with the logo for small screen navbar*/
 /* SVG is not supported for logo without specifying sizes */
 .wy-nav-top a {
-  display: inline-block; 
+  display: block;
   width: auto;              /* logo width */
   height: 45px;              /* logo height */
   background: url("../_static/logo.svg") no-repeat center;
@@ -141,6 +141,17 @@ code, pre {
   overflow: hidden;
   margin: 0 auto;            /* center horizontally */
 }
+/* Make only the logo area clickable */
+  .wy-nav-top a {
+    display: inline-block;         /* was block */
+    width: auto;                  /* logo box width */
+    height: 45px;                  /* logo box height */
+    background: url("../_static/logo.svg") no-repeat center;
+    background-size: contain;
+    text-indent: -9999px;
+    overflow: hidden;
+    margin: 0;                     /* flex handles centering */
+  }
 .wy-nav-top a,
 .wy-nav-top a:visited {
   color: #333 !important;
@@ -154,30 +165,38 @@ code, pre {
 
 /* Sticky top bar on small screens */
 @media (max-width: 768px) {
-  /* Safari-friendly sticky */
+  /* Center contents of the top bar without making the link full-width */
   .wy-nav-top {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 3000;    /* above version/search drawers */
-  }
-  
-  /* 1) Sticky prerequisites: no overflow/transform on ancestors */
-  .wy-body-for-nav,
-  .wy-grid-for-nav,
-  .wy-nav-content-wrap {
-    overflow: visible !important;
-    transform: none !important;     /* Safari treats transformed ancestors as containing blocks */
-    -webkit-transform: none !important;
+    z-index: 3000;
+    display: flex;                 /* center the logo */
+    align-items: center;
+    justify-content: center;
   }
 
-  /* 2) Keep content from sliding under the bar */
-  .wy-nav-content {
-    padding-top: 58px;  /* ≈ header height + buffer */
+  /* Make only the logo area clickable */
+  .wy-nav-top a {
+    display: inline-block;         /* was block */
+    width: 160px;                  /* logo box width */
+    height: 45px;                  /* logo box height */
+    background: url("../_static/logo.svg") no-repeat center;
+    background-size: contain;
+    text-indent: -9999px;
+    overflow: hidden;
+    margin: 0;                     /* flex handles centering */
   }
 
-  /* 3) iOS notches (optional) */
-  body { padding-top: env(safe-area-inset-top); }
+  /* Keep the hamburger/toggle reachable on the left */
+  .wy-nav-top .fa-bars,
+  .wy-nav-top .wy-nav-top-toggle { /* cover both old/new theme selectors */
+    position: absolute;
+    left: 12px;
+  }
+
+  /* Prevent content from hiding under the sticky bar */
+  .wy-nav-content { padding-top: 58px; }
 }
 
 
