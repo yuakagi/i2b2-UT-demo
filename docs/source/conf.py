@@ -38,7 +38,7 @@ html_static_path = ["_static"]
 html_show_sourcelink = False
 autodoc_default_options = {}
 html_css_files = [
-    "color_theme.css",
+    "custom_css.css",
 ]
 
 # -- Hide or show the Sphinx link in the HTML output --
@@ -46,11 +46,11 @@ html_show_sphinx = False
 
 # -- Custom logo and theme options ------------------------------------------
 html_logo = "_static/logo.svg"
-html_favicon = '_static/favicon.png'
+html_favicon = '_static/favicon.svg'
 html_theme_options = {
     "logo_only": True,  # Only show the logo (no title text)
     "display_version": False,  # Optional: hides the version string
 }
 
 def setup(app):
-    app.add_css_file("color_theme.css")
+    app.add_css_file("custom_css.css")
