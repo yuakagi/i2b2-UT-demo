@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="favicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 231.53 263.86">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f4ce23;
+      }
+
+      .cls-1, .cls-2 {
+        font-family: Arial-BoldMT, Arial;
+        font-size: 200px;
+        font-weight: 700;
+        letter-spacing: -.03em;
+      }
+
+      .cls-3 {
+        fill: #1b93cf;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <circle class="cls-3" cx="115.76" cy="115.76" r="115.76"/>
+  <text class="cls-1" transform="translate(48.18 188.56)"><tspan x="0" y="0">i</tspan></text>
+  <text class="cls-2" transform="translate(102 188.56)"><tspan x="0" y="0">J</tspan></text>
+</svg>

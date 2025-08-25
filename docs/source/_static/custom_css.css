@@ -129,29 +129,6 @@ code, pre {
   color: #333 !important;
   font-family: 'Noto Serif JP', sans-serif;
 }
-/* Replace the project title text with the logo for small screen navbar*/
-/* SVG is not supported for logo without specifying sizes */
-.wy-nav-top a {
-  display: block;
-  width: auto;              /* logo width */
-  height: 45px;              /* logo height */
-  background: url("../_static/logo.svg") no-repeat center;
-  background-size: contain;
-  text-indent: -9999px;      /* hide text (page name, by default) */
-  overflow: hidden;
-  margin: 0 auto;            /* center horizontally */
-}
-/* Make only the logo area clickable */
-  .wy-nav-top a {
-    display: inline-block;         /* was block */
-    width: auto;                  /* logo box width */
-    height: 45px;                  /* logo box height */
-    background: url("../_static/logo.svg") no-repeat center;
-    background-size: contain;
-    text-indent: -9999px;
-    overflow: hidden;
-    margin: 0;                     /* flex handles centering */
-  }
 .wy-nav-top a,
 .wy-nav-top a:visited {
   color: #333 !important;
@@ -164,6 +141,7 @@ code, pre {
 }
 
 /* Sticky top bar on small screens */
+/* ---------- Mobile header: centered logo, small clickable area, sticky ---------- */
 @media (max-width: 768px) {
   /* Center contents of the top bar without making the link full-width */
   .wy-nav-top {
@@ -171,36 +149,63 @@ code, pre {
     position: sticky;
     top: 0;
     z-index: 3000;
-    display: flex;                 /* center the logo */
+    display: flex;                /* center the logo */
     align-items: center;
     justify-content: center;
+    height: 45px;                 /* explicit height helps layout math */
   }
 
-  /* Make only the logo area clickable */
+  /* Only the logo is clickable */
   .wy-nav-top a {
-    display: inline-block;         /* was block */
-    width: 160px;                  /* logo box width */
-    height: 45px;                  /* logo box height */
-    background: url("../_static/logo.svg") no-repeat center;
-    background-size: contain;
+    display: inline-block;        /* prevents full-bar click */
+    width: auto;                 /* logo box */
+    height: 45px;
+    background: url("../_static/logo.svg") no-repeat center / contain;
     text-indent: -9999px;
     overflow: hidden;
-    margin: 0;                     /* flex handles centering */
+    margin: 0;                    /* flex handles centering */
   }
 
-  /* Keep the hamburger/toggle reachable on the left */
+  /* Keep hamburger reachable on the left */
   .wy-nav-top .fa-bars,
-  .wy-nav-top .wy-nav-top-toggle { /* cover both old/new theme selectors */
+  .wy-nav-top .wy-nav-top-toggle {
     position: absolute;
     left: 12px;
   }
 
-  /* Prevent content from hiding under the sticky bar */
-  .wy-nav-content { padding-top: 58px; }
+  /* Ancestor resets (required for sticky on iOS Safari) */
+  .wy-body-for-nav,
+  .wy-grid-for-nav,
+  .wy-nav-content-wrap {
+    overflow: visible !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
 
-  /* iOS notches (optional) */
-  body { padding-top: env(safe-area-inset-top); }
+  /* Prevent content from hiding under the bar */
+  .wy-nav-content { padding-top: 58px; } /* ≈ 45px + buffer */
 }
+
+/* ---------- iOS-only fallback: if sticky still fails, use fixed ---------- */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    .wy-nav-top {
+      position: fixed !important;         /* bulletproof on iPhone/iPad */
+      top: env(safe-area-inset-top, 0);
+      left: 0;
+      right: 0;
+      z-index: 4000;
+    }
+    .wy-nav-content {
+      padding-top: calc(45px + env(safe-area-inset-top, 0));
+    }
+    /* Slide-out sidebar should start below the fixed bar (some RTD builds) */
+    .wy-nav-side {
+      top: calc(45px + env(safe-area-inset-top, 0)) !important;
+    }
+  }
+}
+
 
 
 

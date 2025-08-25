@@ -1,8 +1,8 @@
 i2b2 Japan
 ================
 
-.. image:: ./welcome_adobestock_normal_lisence_20250825.png
-   :alt: i2b2 Japan logo
+.. image:: ./images/common_images/welcome_adobestock_normal_lisence_20250825.png
+   :alt: Welcome to i2b2 Japan
    :width: 100%
    :align: center
 
