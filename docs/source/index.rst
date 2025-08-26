@@ -10,6 +10,12 @@ i2b2 Japanへようこそ
 このウェブサイトについて
 =====================
 
+.. image:: _static/images/common_images/i2b2_logos/I2b2_logo.svg
+   :alt: i2b2 logo
+   :target: https://www.i2b2.org/
+   :width: 100px
+   :align: left
+
 
 | `i2b2 <https://www.i2b2.org/>`_ は、米国で開発されたオープンソースの臨床データ管理システムです。 
 | 日本の医療機関での利用を促進するために、i2b2ドキュメント、および日本の医療情報システムとi2b2の連携方法をまとめます。
@@ -32,4 +38,4 @@ i2b2 Japanへようこそ
    ホーム <self>
    各種実装マニュアル <pages/manual/manual>
    役立つリンク集 <pages/links/links>
-   利用規約 <pages/about/about>
+   利用規約 <pages/terms_of_use/terms_of_use>
