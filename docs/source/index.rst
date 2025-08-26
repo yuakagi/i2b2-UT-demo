@@ -1,16 +1,21 @@
 i2b2 Japanへようこそ
 ===================
 
-このウェブサイトについて
-=====================
-
 .. image:: /_static/images/logos/logo.svg
    :alt: Welcome to i2b2 Japan
    :width: 400px
-   :align: left
+   :align: center
+
+
+このウェブサイトについて
+=====================
+
 
 | `i2b2 <https://www.i2b2.org/>`_ は、米国で開発されたオープンソースの臨床データ管理システムです。 
 | 日本の医療機関での利用を促進するために、i2b2ドキュメント、および日本の医療情報システムとi2b2の連携方法をまとめます。
+
+| なお、このプロジェクトはi2b2 TranSmart Foundationとは無関係であり、独自にi2b2の情報をまとめているものです。
+| (英語) This project is not affiliated with the i2b2 TranSmart Foundation. This website provides independent information about i2b2 for Japanese users.
 
 プロジェクトメンバー
 ==================
@@ -27,3 +32,4 @@ i2b2 Japanへようこそ
    ホーム <self>
    各種実装マニュアル <pages/manual/manual>
    役立つリンク集 <pages/links/links>
+   利用規約 <pages/about/about>
