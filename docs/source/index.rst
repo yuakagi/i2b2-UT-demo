@@ -24,6 +24,6 @@ i2b2 Japanへようこそ
    :maxdepth: 3
    :caption: 目次:
 
-   ホーム <index>
+   ホーム <self>
    各種実装マニュアル <pages/manual/manual>
    役立つリンク集 <pages/links/links>
