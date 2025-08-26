@@ -121,7 +121,7 @@ stop 5. 動作確認
 
    .. code-block:: yaml
       :caption: 変更後の例 (安全) 🙆‍♂️
-      
+
       services:
         i2b2-data-pgsql:
           ports:
@@ -139,15 +139,18 @@ stop 5. 動作確認
 対策 2. i2b2サーバーの前にロードバランサーやプロキシサーバーを配置する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+.. note::
+
+   - GitHubリポジトリ `i2b2-jp-docker <https://github.com/yuakagi/i2b2-jp-docker>`_ では、Nginxをリバースプロキシとして設置しているはずです。
+   - しかしバージョンなどによっては異なる場合がありますので、プロキシサーバーの設定をご確認ください。
+
 | これは現在のウェブサービスでは一般的な構成です。
 | i2b2サーバーの前にロードバランサーやプロキシサーバーを配置し、これらに対してFirewallなどのルールを適用することを推奨します。
 | こうすることで、ネットワークに直接公開されるのはロードバランサーやプロキシサーバーのみとなり、ユーザーからのリクエストはこれらを経由してi2b2サーバーに到達します。したがって、i2b2サーバー自体は直接ネットワークに公開されないので、セキュリティが向上します。
 | 例えば、Nginxをリバースプロキシとして使用し、Nginxに対してFirewallのルールを適用することが考えられます
 
 
-
-
-対策 3. 外部公開が必須のポートは、iptablesでDockerコンテナのトラフィックを制御する
+対策 3. 外部公開のポートは、iptablesでDockerコンテナのトラフィックを制御する
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. note::
@@ -164,18 +167,17 @@ stop 5. 動作確認
 | 以下のようにiptablesでルールを追加することで、特定のポートに対して許可・拒否を制御できます。
 
    .. code-block:: bash
-      :caption: 例: 8091ポートに対するアクセス制御
+      :caption: 例: 80ポートに対するアクセス制御
 
       # まずすべてのアクセスを拒否する
-      sudo iptables -A DOCKER-USER -p tcp --dport 8091 -j DROP
+      sudo iptables -A DOCKER-USER -p tcp --dport 80 -j DROP
 
       # 信頼できるIPのみを許可する (例: 自分のオフィスIP)
-      sudo iptables -I DOCKER-USER -s 203.0.113.25 -p tcp --dport 8091 -j ACCEPT
+      sudo iptables -I DOCKER-USER -s 203.0.113.25 -p tcp --dport 80 -j ACCEPT
 
       # 必要なら日本のIPレンジだけを許可する (jp.zoneにIPレンジリストを保存している場合)
       for ip in $(cat jp.zone); do
-        sudo iptables -I DOCKER-USER -p tcp --dport 8091 -s $ip -j ACCEPT
+        sudo iptables -I DOCKER-USER -p tcp --dport 80 -s $ip -j ACCEPT
       done
 
-| ルールは上から順に評価されるため、必ず「許可ルール」を先に挿入し、最後に「拒否ルール」を追加するのが基本です。
 | また、作成したiptablesルールは `iptables-save` コマンドなどを使って保存し、再起動後も有効になるように設定してください。

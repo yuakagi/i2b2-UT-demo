@@ -52,5 +52,6 @@ html_theme_options = {
     "display_version": False,  # Optional: hides the version string
 }
 
+
 def setup(app):
     app.add_css_file("custom_css.css")

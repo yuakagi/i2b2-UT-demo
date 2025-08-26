@@ -8,7 +8,12 @@ services:
   # ––––––––––––––––––––––––––––––––––––––––––
   # i2b2 database (PostgreSQL)のコンテナ定義
   # ––––––––––––––––––––––––––––––––––––––––––
-  # i2b2は`i2b2`という名前のデータベースを使用するのが基本構成です。
+  # ⚠️ このコンテナは、uid=0(root) gid=0(root) groups=0(root)で実行されます。これは、公式i2b2のPostgresイメージがこのように設計されているためです。
+  #    必ずしもDockerのベストプラクティスに従っていません。ただし、外部からのアクセスを正しく制限すれば、セキュリティ上のリスクは最小限に抑えられます。
+  #    それでもセキュリティ上の懸念がある場合は変更が可能ですが、Postgresの動作に影響を与える可能性があるため、ユーザーの変更は慎重に行ってください。
+  #    (例: USER postgresなど。ただし、公式i2b2のPostgresイメージはrootで動作することを前提としているため、何もしないと動作しなくなります。大幅な変更が必要です。)
+
+  # i2b2は`i2b2`という名前のデータベースを使用します。
   i2b2-data-pgsql:
     build:
       context: ./postgres
@@ -18,16 +23,15 @@ services:
         I2B2_DATA_PGSQL_TAG: ${I2B2_DATA_PGSQL_TAG}
     container_name: i2b2-data-pgsql
     environment:
-      - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - I2B2_DB_NAME=${I2B2_DB_NAME}
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_CONFIG_FILE=/var/lib/postgresql/data/postgresql.conf
-    # Postgresのデータを永続化するため、ホストのディレクトリをマウントします。
-    # データは全てホストの `${MOUNT_DIR}/var/lib/postgresql/data` に保存されます。
-    # (⚠️ Postgresのデータをクリアしたい場合は、ホスト側のディレクトリを削除してください。)
     volumes:
+      # Postgresのデータを永続化するため、ホストのディレクトリをマウントします。
+      # データは全てホストの `${MOUNT_DIR}/var/lib/postgresql/data` に保存されます。
+      # (⚠️ Postgresのデータをクリアしたい場合は、ホスト側のディレクトリを削除してください。)
+      # Postgresデータ保存先
       - ${MOUNT_DIR}/var/lib/postgresql/data:/var/lib/postgresql/data
+      # Postgresのログ保存先
+      - ${MOUNT_DIR}/var/log/postgresql:/var/log/postgresql
     # Postgresのポート設定
     ports:
       # ホストからのアクセスのみに制限します。
@@ -117,19 +121,23 @@ services:
   # ‼️ これはi2b2の公式リリースではありませんが、i2b2-webclientのパフォーマンスとセキュリティ向上のため追加しています。
   # –––––––––––––––––––––––––––––––––––––––
   # i2b2-webclientはApacheで動作していますが、リバースプロキシとしてnginxを使用して、HTTP/HTTPSの終端を行います。
-  nginx:
+  i2b2-nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    container_name: i2b2-nginx
     ports:
-      # HTTPのポート設定
+      # HTTPのポート設定 (HTTP -> i2b2-webclientへリバースプロキシ)
       # ⚠️ HTTPSはサポートしません。もし必要な場合も、このNGINXサーバーでTLS設定を行うのはあまり現実的ではありません。
-      #    HTTPSを使用する場合は、AWSのALBやCloudFrontなど、外部サービスでHTTPS終端を行い、それ以降はHTTPでこのサービスに接続することが安全かつ現実的です。
+      #    HTTPSを使用する場合は、AWSのALBなどの外部サービスでHTTPS終端を行い、それ以降はHTTPでこのサービスに接続することが安全かつ現実的です。
       #    その場合、NGINXのconfファイルを適切に調整してください (例: X-Forwarded-Protoヘッダー、クライアントIP取得の設定など)。
       - "80:80" 
     volumes:
       # NGINXのログをホストに保存する
+      # ⚠️ ログは比較的大きなファイルになる可能性があるため、定期的にローテーションするなどの運用が必要です。ご確認ください。
       - ${MOUNT_DIR}/var/log/nginx:/var/log/nginx
+    # entrypoint.shはDockerfile内でコピー、実行権限を付与しています。
+    entrypoint: ["/entrypoint.sh"]
     depends_on:
       - i2b2-webclient
     networks:
@@ -142,11 +150,3 @@ services:
 networks:
   i2b2-net:
     name: i2b2-net
-
-# –––––––––––––––––––––––––––––––––––––––
-# Docker Volume 定義
-# –––––––––––––––––––––––––––––––––––––––
-#volumes:
-  # ⚠️ PostgresのデータはこのDockerボリュームに保存されます。
-  #pgdata:
-  #  driver: local

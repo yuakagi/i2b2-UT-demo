@@ -104,6 +104,7 @@ Dockerを使ってi2b2サーバーを構築する
 - i2b2 Core Server (i2b2-core-server)
 - i2b2 Web Client (i2b2-webclient)
 - PostgreSQL Database (i2b2-data-pgsql)
+- Nginx プロキシサーバー (i2b2-nginx)
 
 | これらが同じDockerネットワーク上で連携して動作します。PostgreSQLのデータベースの本体は`i2b2-data-pgsql`コンテナ内に存在します。
 
