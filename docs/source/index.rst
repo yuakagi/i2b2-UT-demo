@@ -1,10 +1,13 @@
 i2b2 Japanへようこそ
 ===================
 
-.. image:: /_static/images/logos/logo.svg
+.. figure:: /_static/images/logos/logo.svg
    :alt: Welcome to i2b2 Japan
+   :target: self
    :width: 400px
    :align: center
+
+   i2b2の情報を日本語で提供するウェブサイトです。
 
 
 このウェブサイトについて
