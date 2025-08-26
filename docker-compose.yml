@@ -2,12 +2,13 @@
 # * docker-compose.yml for i2b2 server   *
 # * 環境変数は.envファイルに記入します        *
 # ****************************************
+# - 同じディレクトリに.envがあれば、自動的に読み込まれるので、.envについてこのファイルで特に指定する必要はありません。
 
 services:
   # ––––––––––––––––––––––––––––––––––––––––––
   # i2b2 database (PostgreSQL)のコンテナ定義
   # ––––––––––––––––––––––––––––––––––––––––––
-  # i2b2は`i2b2`という名前のデータベースを使用し、その中にCellごとのスキーマを作成するというのが基本構成です。
+  # i2b2は`i2b2`という名前のデータベースを使用するのが基本構成です。
   i2b2-data-pgsql:
     build:
       context: ./postgres
@@ -22,15 +23,19 @@ services:
       - I2B2_DB_NAME=${I2B2_DB_NAME}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_CONFIG_FILE=/var/lib/postgresql/data/postgresql.conf
+    # Postgresのデータを永続化するため、ホストのディレクトリをマウントします。
+    # データは全てホストの `${MOUNT_DIR}/var/lib/postgresql/data` に保存されます。
+    # (⚠️ Postgresのデータをクリアしたい場合は、ホスト側のディレクトリを削除してください。)
+    volumes:
+      - ${MOUNT_DIR}/var/lib/postgresql/data:/var/lib/postgresql/data
+    # Postgresのポート設定
+    ports:
+      # ホストからのアクセスのみに制限します。
+      - 127.0.0.1:5432:5432 
+      # ⚠️ 外部から接続する必要がある場合は、以下に置き換え。(開発時のみ。プロダクトでは5432は公開しない。)
+      # - 5432:5432
     networks:
       - i2b2-net
-    # Postgresのデータを永続化するためのDockerボリュームをマウントします
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    # ⚠️ Postgresのポート設定
-    # (セキュリティ上の理由で公開しない、5432以外を使用するなどの場合、ここを変更してください。)
-    ports:
-      - 5432:5432
 
   # ––––––––––––––––––––––––––––––––––––––––––––––
   # i2b2 backend coreサーバーのコンテナ定義
@@ -95,26 +100,53 @@ services:
     container_name: i2b2-webclient
     restart: unless-stopped
     # WebClientのポート設定
-    ports:
-      - ${WEBCLIENT_PORT}:80"
+    # ‼️ Nginxをリバースプロキシとして使用するため、docker network内で80番のみExposeし、ホストには公開しません。
+    expose:
+      - "80"
+    # もしプロキシを介さず直接公開したい場合は、以下のように設定 (推奨しません)
+    # ports:
+    #  - 8000:80"
     command: /run-httpd.sh localhost
     depends_on:
       - i2b2-core-server
     networks:
       - i2b2-net
 
+  # –––––––––––––––––––––––––––––––––––––––
+  # リバースプロキシ (nginx) のコンテナ定義
+  # ‼️ これはi2b2の公式リリースではありませんが、i2b2-webclientのパフォーマンスとセキュリティ向上のため追加しています。
+  # –––––––––––––––––––––––––––––––––––––––
+  # i2b2-webclientはApacheで動作していますが、リバースプロキシとしてnginxを使用して、HTTP/HTTPSの終端を行います。
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      # HTTPのポート設定
+      # ⚠️ HTTPSはサポートしません。もし必要な場合も、このNGINXサーバーでTLS設定を行うのはあまり現実的ではありません。
+      #    HTTPSを使用する場合は、AWSのALBやCloudFrontなど、外部サービスでHTTPS終端を行い、それ以降はHTTPでこのサービスに接続することが安全かつ現実的です。
+      #    その場合、NGINXのconfファイルを適切に調整してください (例: X-Forwarded-Protoヘッダー、クライアントIP取得の設定など)。
+      - "80:80" 
+    volumes:
+      # NGINXのログをホストに保存する
+      - ${MOUNT_DIR}/var/log/nginx:/var/log/nginx
+    depends_on:
+      - i2b2-webclient
+    networks:
+      - i2b2-net
+
 # –––––––––––––––––––––––––––––––––––––––
 # Docker Network 定義
 # –––––––––––––––––––––––––––––––––––––––
+# 同じネットワーク内のコンテナは、サービス名で互いに通信でき、名前解決も自動的に行われます。
 networks:
   i2b2-net:
     name: i2b2-net
-    driver: bridge
 
 # –––––––––––––––––––––––––––––––––––––––
 # Docker Volume 定義
 # –––––––––––––––––––––––––––––––––––––––
-volumes:
+#volumes:
   # ⚠️ PostgresのデータはこのDockerボリュームに保存されます。
-  pgdata:
-    driver: local
+  #pgdata:
+  #  driver: local
