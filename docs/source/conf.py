@@ -51,7 +51,8 @@ html_theme_options = {
     "logo_only": True,  # Only show the logo (no title text)
     "display_version": False,  # Optional: hides the version string
 }
-
+# disable auto-linking of scaled images
+html_scaled_image_link = False
 
 def setup(app):
     app.add_css_file("custom_css.css")

@@ -5,7 +5,7 @@ i2b2 Japanへようこそ
    :alt: Welcome to i2b2 Japan
    :target: none
    :width: 400px
-   :align: left
+   :align: center
 
    i2b2の情報を日本語で提供するウェブサイトです。
 
@@ -13,12 +13,13 @@ i2b2 Japanへようこそ
 このウェブサイトについて
 =====================
 
-.. image:: _static/images/common_images/i2b2_logos/I2b2_logo.svg
+.. figure:: _static/images/common_images/i2b2_logos/I2b2_logo.svg
    :alt: i2b2 logo
    :target: https://www.i2b2.org/
    :width: 100px
    :align: left
 
+   i2b2のロゴマーク
 
 | `i2b2 <https://www.i2b2.org/>`_ は、米国で開発されたオープンソースの臨床データ管理システムです。 
 | 日本の医療機関での利用を促進するために、i2b2ドキュメント、および日本の医療情報システムとi2b2の連携方法をまとめます。
