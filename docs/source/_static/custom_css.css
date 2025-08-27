@@ -349,7 +349,7 @@ dl.function>dt {
    Sticky headers in content area
    ====================================================== */
 :root{
-  --sticky-offset-mobile: 58px;  /* your 45px mobile bar + buffer */
+  --sticky-offset-mobile: 58px;  /* for 45px mobile top navbar + buffer */
   --sticky-offset-desktop: 0px;  /* >0 if you also make desktop bar sticky */
 }
 

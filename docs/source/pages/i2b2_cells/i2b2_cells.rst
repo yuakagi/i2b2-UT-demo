@@ -2,7 +2,12 @@
 i2b2のCellについて
 ***********************************
 
-| i2b2のCellについて説明します。
+.. figure:: /_static/images/common_images/illustrations/bees_and_hive.svg
+   :alt: i2b2 Hive and Cells
+   :width: 200px
+   :align: center
+
+   i2b2 CellとHiveについて説明します。
 
 1. i2b2のCell構成 (i2b2 Hive)
 =================================
