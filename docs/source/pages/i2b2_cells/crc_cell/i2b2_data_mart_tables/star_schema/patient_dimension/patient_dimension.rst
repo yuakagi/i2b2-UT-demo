@@ -27,7 +27,7 @@ PATIENT_DIMENSIONテーブルについて
 
 .. list-table::
    :header-rows: 1
-   :widths: 10 20 20 50, 50
+   :widths: 10 20 20 50 50
 
    * - PKかどうか
      - 列名
@@ -73,6 +73,7 @@ PATIENT_DIMENSIONテーブルについて
    * - 
      - RACE_CD
      - varchar(50)
+     - 人種コード。
      - 対応なし。SS-MIX2では人種を扱わない。
    * - 
      - MARITAL_STATUS_CD*
