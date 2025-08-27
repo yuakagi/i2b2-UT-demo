@@ -348,51 +348,36 @@ dl.function>dt {
 /* ======================================================
    Sticky headers in content area
    ====================================================== */
-/* --- Sticky prerequisites: neutralize transform/overflow on RTD wrappers --- */
 .wy-body-for-nav,
 .wy-grid-for-nav,
 .wy-nav-content-wrap {
   overflow: visible !important;
   transform: none !important;
-  -webkit-transform: none !important; /* iOS Safari */
+  -webkit-transform: none !important;
 }
 
-/* Offsets that match your mobile top bar (45px + buffer) */
 :root {
   --sticky-offset-mobile: 58px;
   --sticky-offset-desktop: 0px;
 }
 
-/* The floating bar showing the current section */
-.current-section-bar{
+.current-section-bar {
   position: sticky;
-  position: -webkit-sticky;       /* iOS */
+  position: -webkit-sticky;
   top: var(--sticky-offset-desktop);
   z-index: 4000;
-  display: none;                  /* JS will turn this on */
+  display: none; /* your JS toggles */
   background: #fff;
   border-bottom: 1px solid #e5e5e5;
   font-weight: 700;
   padding: .45rem .65rem;
-  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.current-section-bar a{
-  color: inherit; text-decoration: none;
+@media (max-width: 768px) {
+  .current-section-bar { top: var(--sticky-offset-mobile); }
 }
-.current-section-bar a:hover,
-.current-section-bar a:focus{ text-decoration: underline; }
-
-/* Mobile: account for the sticky top navbar you already have */
-@media (max-width: 768px){
-  .current-section-bar{
-    top: var(--sticky-offset-mobile);
-  }
-}
-
-/* Keep in-page anchors visible below the floating bar (nice QoL) */
 .wy-nav-content :is(h1,h2,h3,h4,h5,h6){
   scroll-margin-top: calc(var(--sticky-offset-mobile) + 8px);
 }

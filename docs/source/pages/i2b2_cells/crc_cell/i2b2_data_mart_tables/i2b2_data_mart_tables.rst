@@ -2,10 +2,14 @@
 i2b2 Data Martのテーブルについて
 ***********************************
 
-| i2b2 Data Martのテーブルについて説明します。
+.. figure:: /_static/images/common_images/illustrations/mart.svg
+   :alt: data warehouse icon
+   :width: 200px
+   :align: center
+   
+   i2b2 Data Martのテーブルについて説明します。
 
 | i2b2 Data Martは、i2b2システム内でデータウェアハウスとして機能し、臨床データを保存します。
-
 
 1. Star Schemaについて
 =================================
