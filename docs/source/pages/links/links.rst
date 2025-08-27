@@ -3,11 +3,11 @@
 i2b2関連のリンク集
 ***********************************
 
-.. figure:: /_static/images/pages/links/links_adobestock_normal_lisence_20250825.svg
+.. figure:: /_static/images/common_images/illustrations/website_links.svg
    :alt: i2b2 Links
    :width: 400px
-
-| i2b2の情報収集に役立つリンク集をまとめます。
+   
+   i2b2の情報収集に役立つリンク集をまとめます。
 
 1. i2b2 Community Wiki
 =================================

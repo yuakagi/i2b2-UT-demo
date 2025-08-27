@@ -2,7 +2,12 @@
 Data Repository Cell (CRC) について
 ***********************************
 
-| Data Repository Cell (CRC) について説明します。
+.. figure:: /_static/images/common_images/illustrations/data_analysis.svg
+   :alt: Data Repository Cell (CRC)
+   :width: 200px
+   :align: center
+   
+   Data Repository Cell (CRC) はi2b2の臨床データを管理するCellです。
 
 1. CRC Cellの概要
 =================================
