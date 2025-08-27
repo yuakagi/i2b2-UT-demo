@@ -3,11 +3,10 @@ i2b2 Japanへようこそ
 
 .. figure:: /_static/images/logos/logo.svg
    :alt: Welcome to i2b2 Japan
-   :target: none
    :width: 400px
    :align: center
 
-   i2b2の情報を日本語で提供するウェブサイトです。
+   日本国内向けにi2b2の情報を提供するウェブサイトです。
 
 
 このウェブサイトについて
@@ -25,7 +24,9 @@ i2b2 Japanへようこそ
 | 日本の医療機関での利用を促進するために、i2b2ドキュメント、および日本の医療情報システムとi2b2の連携方法をまとめます。
 
 | なお、このプロジェクトはi2b2 TranSmart Foundationとは無関係であり、独自にi2b2の情報をまとめているものです。
+
 | (英語) This project is not affiliated with the i2b2 TranSmart Foundation. This website provides independent information about i2b2 for Japanese users.
+|
 
 プロジェクトメンバー
 ==================
@@ -40,6 +41,7 @@ i2b2 Japanへようこそ
    :caption: 目次:
 
    ホーム <self>
+   i2b2 CellとHiveについて <pages/i2b2_cells/i2b2_cells>
    各種実装マニュアル <pages/manual/manual>
    役立つリンク集 <pages/links/links>
    利用規約 <pages/terms_of_use/terms_of_use>
