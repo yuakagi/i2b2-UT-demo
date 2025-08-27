@@ -348,25 +348,28 @@ dl.function>dt {
 /* ======================================================
    Sticky headers in content area
    ====================================================== */
+/* must be global, not just @media */
 .wy-body-for-nav,
 .wy-grid-for-nav,
 .wy-nav-content-wrap {
   overflow: visible !important;
   transform: none !important;
-  -webkit-transform: none !important;
+  -webkit-transform: none !important; /* iOS Safari */
 }
 
-:root {
-  --sticky-offset-mobile: 58px;
-  --sticky-offset-desktop: 0px;
+/* offsets for your bar */
+:root{
+  --sticky-offset-mobile: 58px;  /* 45px navbar + buffer */
+  --sticky-offset-desktop: 0px;  /* raise if desktop bar is also sticky */
 }
 
-.current-section-bar {
+/* the floating bar itself */
+.current-section-bar{
   position: sticky;
   position: -webkit-sticky;
   top: var(--sticky-offset-desktop);
   z-index: 4000;
-  display: none; /* your JS toggles */
+  display: none;
   background: #fff;
   border-bottom: 1px solid #e5e5e5;
   font-weight: 700;
@@ -375,9 +378,11 @@ dl.function>dt {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-@media (max-width: 768px) {
-  .current-section-bar { top: var(--sticky-offset-mobile); }
+@media (max-width: 768px){
+  .current-section-bar{ top: var(--sticky-offset-mobile); }
 }
+
+/* anchor jumps visible below bar */
 .wy-nav-content :is(h1,h2,h3,h4,h5,h6){
   scroll-margin-top: calc(var(--sticky-offset-mobile) + 8px);
 }

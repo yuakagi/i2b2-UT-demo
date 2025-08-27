@@ -57,6 +57,3 @@ html_theme_options = {
 # disable auto-linking of scaled images
 html_scaled_image_link = False
 
-def setup(app):
-    app.add_css_file("custom_css.css")
-    app.add_js_file("custom_js.js")
