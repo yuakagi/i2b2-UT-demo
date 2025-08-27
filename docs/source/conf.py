@@ -40,6 +40,9 @@ autodoc_default_options = {}
 html_css_files = [
     "custom_css.css",
 ]
+html_js_files = [
+    "custom_js.js",
+]
 
 # -- Hide or show the Sphinx link in the HTML output --
 html_show_sphinx = False
@@ -56,3 +59,4 @@ html_scaled_image_link = False
 
 def setup(app):
     app.add_css_file("custom_css.css")
+    app.add_js_file("custom_js.js")

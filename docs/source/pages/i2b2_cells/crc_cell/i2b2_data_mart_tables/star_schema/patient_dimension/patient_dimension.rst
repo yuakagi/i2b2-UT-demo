@@ -26,7 +26,7 @@ PATIENT_DIMENSIONはどこにある？
 ================================
 
 | **i2b2のData Repository (CRC) Cellのスキーマに存在** します。
-| データベース名が `i2b2`でCRC Cell用のスキーマ名が `i2b2demodata` の場合、 `i2b2.i2b2demodata.PATIENT_DIMENSION` としてアクセスします。
+| データベース名が `i2b2`でCRC Cell用のスキーマ名が `i2b2demodata` の場合、 **`i2b2.i2b2demodata.PATIENT_DIMENSION` などとしてアクセス** します。
 
 PATIENT_DIMENSIONのテーブル定義
 ================================

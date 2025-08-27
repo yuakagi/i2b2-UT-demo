@@ -218,10 +218,6 @@ pre {
 }
 
 
-
-
-
-
 /* ======================================================
    Function Boxes and Admonitions
    ====================================================== */
@@ -346,4 +342,50 @@ dl.function>dt {
   white-space: pre-wrap;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+
+/* ======================================================
+   Sticky headers in content area
+   ====================================================== */
+:root{
+  --sticky-offset-mobile: 58px;  /* your 45px mobile bar + buffer */
+  --sticky-offset-desktop: 0px;  /* >0 if you also make desktop bar sticky */
+}
+
+/* The single floating bar that shows the *current* section title */
+.current-section-bar{
+  position: sticky;
+  top: var(--sticky-offset-desktop);
+  z-index: 4000;                /* above content & code blocks */
+  display: none;                 /* shown by JS when active */
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  font-weight: 700;
+  padding: .45rem .65rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Make the title a link (tap to jump) */
+.current-section-bar a{
+  color: inherit;
+  text-decoration: none;
+}
+.current-section-bar a:hover,
+.current-section-bar a:focus{
+  text-decoration: underline;
+}
+
+@media (max-width: 768px){
+  .current-section-bar{
+    top: var(--sticky-offset-mobile);
+  }
+}
+
+/* Keep anchor jumps visible below the floating bar */
+.wy-nav-content :is(h1,h2,h3,h4,h5,h6){
+  scroll-margin-top: calc(var(--sticky-offset-mobile) + 8px);
 }
