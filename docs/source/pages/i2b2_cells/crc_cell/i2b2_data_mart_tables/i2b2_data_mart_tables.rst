@@ -17,6 +17,7 @@ i2b2 Data Martのテーブルについて
 | これら5つのテーブルをまとめて **Star Schema** と呼びます。
 | 実際にi2b2のユーザーが利用するデータのほとんどは、このStar Schemaのテーブルに保存されます。
 
+- :doc:`PATIENT_DIMENSION </pages/i2b2_cells/crc_cell/i2b2_data_mart_tables/star_schema/patient_dimension/patient_dimension>`
 - `PATIENT_DIMENSION <./star_schema/patient_dimension/patient_dimension>`: 患者の基本情報を保存します。患者ID、性別、生年月日、死亡情報などが含まれます。
 - `CONCEPT_DIMENSION`: 医療概念・オントロジー（診断、処方、検査コードなど）を保存します。各概念のコード、名称、階層情報など。
 - `VISIT_DIMENSION`: 患者の受診情報を保存します。受診日時、病院コード、診療科コードなどが含まれます。
