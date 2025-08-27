@@ -1,5 +1,5 @@
 ***********************************
-i2b2のCellについて
+i2b2のCellとHiveについて
 ***********************************
 
 .. figure:: /_static/images/common_images/illustrations/bees_and_hive.svg
@@ -7,7 +7,7 @@ i2b2のCellについて
    :width: 200px
    :align: center
 
-   i2b2は蜂の巣(Hive)のようにたくさんの小部屋(Cell)が集まってできています。
+   i2b2は蜂の巣(Hive)のように小部屋(Cell)が集まってできています。
 
 1. i2b2 CellとHiveとは？
 =================================
