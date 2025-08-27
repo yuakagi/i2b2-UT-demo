@@ -18,7 +18,7 @@
 .. note::
 
    - i2b2で `user role` という場合、二つの意味があります。
-   - 一つは**Data Protection Trackのuser role** とも言われるもので、このページで解説しているものです。
+   - 一つは **Data Protection Trackのuser role** とも言われるもので、このページで解説します。
    - もう一つは **Hive Management Trackのuser role** とも言われます。これはi2b2の他のユーザーのクエリ結果にアクセスできるかどうかを制御します。このページでは解説しません。
 
 2. CRC Cellのユーザーロールの詳細
