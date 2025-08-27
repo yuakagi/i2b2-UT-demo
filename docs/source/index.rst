@@ -12,7 +12,7 @@ i2b2 Japanへようこそ
 このウェブサイトについて
 =====================
 
-.. figure:: _static/images/common_images/i2b2_logos/I2b2_logo.svg
+.. figure:: /_static/images/common_images/i2b2_logos/I2b2_logo.svg
    :alt: i2b2 logo
    :target: https://www.i2b2.org/
    :width: 100px

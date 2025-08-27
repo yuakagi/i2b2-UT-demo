@@ -7,7 +7,7 @@ i2b2のCellについて
 1. i2b2のCell構成 (i2b2 Hive)
 =================================
 
-.. figure:: _static/images/common_images/i2b2_logos/I2b2_logo.svg
+.. figure:: /_static/images/common_images/i2b2_logos/I2b2_logo.svg
    :alt: i2b2 logo
    :width: 100px
    :align: left
@@ -20,7 +20,11 @@ i2b2のCellについて
 | それぞれのCellは特定の機能を担当し、連携してi2b2システム全体を構成します。
 | 以下にi2b2 Hiveを構成する主要なCellを示します。
 
-- `CRC Cell (Data Repository Cell) <./crc_cell/crc_cell>`: i2b2の中心的なCellで、データの保存とクエリ処理を担当します。ユーザーがデータを検索・取得する際に利用されます。
+
+2. 主要なi2b2 Cellの説明
+=================================
+
+- :doc:`CRC Cell (Data Repository Cell) </pages/i2b2_cells/crc_cell/crc_cell>` : i2b2の中心的なCellで、データの保存とクエリ処理を担当します。ユーザーがデータを検索・取得する際に利用されます。
 - **ONT Cell (Ontology Management Cell)**: 概念（コンセプト）情報を管理するCellです。ユーザーが利用する用語やコード体系を定義・保存します。
 - **PM Cell (Project Management Cell)**: プロジェクトやユーザー管理を担当するCellです。ユーザーの認証や権限管理を行います。
 - **WORK Cell (Workflow Framework Cell)**: このセルは、Hive内のさまざまな情報を処理するために使用されます。処理された情報のほとんどは、CRC Cellに保存されるか、あるいはユーザーへの表示として利用されます
