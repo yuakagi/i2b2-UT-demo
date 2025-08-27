@@ -27,17 +27,24 @@ PATIENT_DIMENSIONテーブルについて
 
 .. list-table::
    :header-rows: 1
-   :widths: 10 20 20 50 50
+   :stub-columns: 1
+   :width: 800px
 
-   * - PKかどうか
-     - 列名
+   * - 列名
+     - キー
      - データ型
      - 説明
      - SS-MIX2との対応
-   * - PK
-     - VITAL_STATUS_CD
+   * - PATIENT_NUM
+     - PK
+     - int
+     - DB内での患者の一意な識別子。PK。
+     - | i2b2内での患者識別子を示すものであり、
+       | SS-MIX2のデータ項目とは直接対応しない。 
+   * - VITAL_STATUS_CD
+     - 
      - varchar(50)
-     - | PKなので、NULL不可、重複不可。 
+     - 
        | 患者の生存状態を示すコード。これは標準化されたコードはないが、
        | 推奨されるコード表記法がある。 詳細は下方参照。
      - | PPR^ZD1のPRB-14(プロブレムのライフサイクル状態)、
@@ -45,99 +52,99 @@ PATIENT_DIMENSIONテーブルについて
        | しかし、SS-MIX2では患者の生存状態の格納を直接目的にしたフィールドはなく、
        | 上記のフィールドも欠損していることがあるため、
        | SS-MIX2で患者の生存状態を正確に表現することは難しい。
-   * - 
-     - BIRTH_DATE
+   * - BIRTH_DATE
+     - 
      - datetime
      - | 生年月日
      - | ADT^A08等のPID-7(生年月日)。
-   * - 
-     - DEATH_DATE
+   * - DEATH_DATE
+     - 
      - datetime
      - 患者の死亡日。NULL 可。
      - | PPR^ZD1のPRB-15(プロブレムのライフサイクル状態の 日付／時刻)、
        | 死亡退院ではADT^A03のとPV1-45(退院日時)で表現可能。
-   * - 
-     - SEX_CD*
+   * - SEX_CD*
+     - 
      - varchar(50)
      - 性別コード。
      - | ADT^A08等のPID-8(性別)。
        | SS-MIXではM:男性、F:女性、O:その他、U:不明の4つのコードを使用。
-   * - 
-     - AGE_IN_YEARS_NUM*
+   * - AGE_IN_YEARS_NUM*
+     - 
      - int
      - 年齢（年単位）。
      - | 直接の対応なし。
        | ADT^A08等のPID-7(生年月日)から計算可能だが、
        | 年齢は時間とともに変化するため、
        | 静的な値として保存することはしない方が良いかもしれない。
-   * - 
-     - LANGUAGE_CD*
+   * - LANGUAGE_CD*
+     - 
      - varchar(50)
      - 言語コード。
      - 対応なし。SS-MIX2では患者言語を扱わない。
-   * - 
-     - RACE_CD
+   * - RACE_CD
+     - 
      - varchar(50)
      - 人種コード。
      - 対応なし。SS-MIX2では人種を扱わない。
-   * - 
-     - MARITAL_STATUS_CD*
+   * - MARITAL_STATUS_CD*
+     - 
      - varchar(50)
      - 婚姻状態コード。
      - 対応なし。SS-MIX2では婚姻状態を扱わない。
-   * - 
-     - RELIGION_CD*
+   * - RELIGION_CD*
+     - 
      - varchar(50)
      - 宗教コード。任意列。
      - 対応なし。SS-MIX2では宗教を扱わない。
-   * - 
-     - ZIP_CD*
+   * - ZIP_CD*
+     - 
      - varchar(10)
      - 郵便番号。
      - | ADT^A08等のPID-11(住所)の一部として表現可能。
-   * - 
-     - STATECITYZIP_PATH
+   * - STATECITYZIP_PATH
+     - 
      - varchar(700)
      - | 階層型地理コード。
-       | 患者の住所をある程度のレベルまで階層構造で格納し、
-       | 東京都文京区本郷ならば `TOKYO\BUNKYO_KU\HONGO` のように。
-       | 文京区の患者だけ取得したければ、 `TOKYO\BUNKYO_KU*` 
-       | のようにワイルドカード検索で検索することを目的にしている。
+       | 患者の住所をある程度のレベルまで階層構造で格納。
+       | 東京都文京区本郷ならば TOKYO\BUNKYO_KU\HONGO のように。
+       | 文京区の患者だけ取得したければ、 TOKYO\BUNKYO_KU* 
+       | のようにワイルドカード「*」で検索することを目的にしている。
        | この値もOntology Cellのmetadata内で管理するとの記載あり。
      - | ADT^A08等のPID-11(住所)の一部として表現可能。 
-   * - 
-     - PATIENT_BLOB
+   * - PATIENT_BLOB
+     - 
      - text
      - | 任意の拡張情報を格納するフィールド。
        | XML形式で格納するようです。
      - | 対応なし。追加情報をどうしても患者テーブルに格納したい場合は、
        | ここに格納するより新規に列を追加した方が良いと思われる。
-   * - 
-     - UPDATE_DATE
+   * - UPDATE_DATE
+     - 
      - datetime
      - レコードが最終更新された日時。
      - | i2b2内でのレコード更新日時を示すものであり、
        | SS-MIX2のデータ項目とは直接対応しない。
-   * - 
-     - DOWNLOAD_DATE
+   * - DOWNLOAD_DATE
+     - 
      - datetime
      - レコードがシステムにダウンロードされた日時。
      - | i2b2内でのレコードダウンロード日時を示すものであり、
        | SS-MIX2のデータ項目とは直接対応しない。
-   * - 
-     - IMPORT_DATE
+   * - IMPORT_DATE
+     - 
      - datetime
      - レコードがインポートされた日時。
      - | i2b2内でのレコードインポート日時を示すものであり、
        | SS-MIX2のデータ項目とは直接対応しない。
-   * - 
-     - SOURCESYSTEM_CD
+   * - SOURCESYSTEM_CD
+     - 
      - varchar(50)
      - データのソースシステムを識別するコード。
      - | i2b2内でのデータソース識別コードを示すものであり、
        | SS-MIX2のデータ項目とは直接対応しない。
-   * - 
-     - UPLOAD_ID
+   * - UPLOAD_ID
+     - 
      - int
      - アップロード処理の識別子。
      - | i2b2内でのアップロード処理識別子を示すものであり、
