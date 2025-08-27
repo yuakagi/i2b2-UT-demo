@@ -107,8 +107,8 @@ PATIENT_DIMENSIONテーブルについて
      - varchar(700)
      - | 階層型地理コード。
        | 患者の住所をある程度のレベルまで階層構造で格納。
-       | 東京都文京区本郷ならば TOKYO\BUNKYO_KU\HONGO のように。
-       | 文京区の患者だけ取得したければ、 TOKYO\BUNKYO_KU* 
+       | 東京都文京区本郷ならば `TOKYO\\BUNKYO_KU\\HONGO` のように。
+       | 文京区の患者だけ取得したければ、 `TOKYO\\BUNKYO_KU*` 
        | のようにワイルドカード「*」で検索することを目的にしている。
        | この値もOntology Cellのmetadata内で管理するとの記載あり。
      - | ADT^A08等のPID-11(住所)の一部として表現可能。 
