@@ -17,6 +17,7 @@ Data Repository Cell (CRC) について
 
 | このCellについては、以下のページで詳しく説明します。
 
-- データのアクセス権限 (Data Permission)
+
+- :doc:`ユーザーロールとデータアクセス権限 </pages/i2b2_cells/crc_cell/data_permission/data_permission>` : CRC Cellにおけるユーザーロールとそれに基づくデータアクセス権限について説明します。
 - i2b2 Data Mart (i2b2のデータウェアハウスです)
 - `i2b2 Data Martのテーブルについて <./i2b2_data_mart_tables/i2b2_data_mart_tables>`_

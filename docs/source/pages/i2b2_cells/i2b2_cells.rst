@@ -7,9 +7,9 @@ i2b2のCellについて
    :width: 200px
    :align: center
 
-   i2b2 CellとHiveについて説明します。
+   i2b2は蜂の巣(Hive)のようにたくさんの小部屋(Cell)が集まってできています。
 
-1. i2b2のCell構成 (i2b2 Hive)
+1. i2b2 CellとHiveとは？
 =================================
 
 .. figure:: /_static/images/common_images/i2b2_logos/I2b2_logo.svg
@@ -17,10 +17,10 @@ i2b2のCellについて
    :width: 100px
    :align: left
 
-   i2b2のロゴマーク
+   i2b2のロゴは蜂の巣
 
 | i2b2は `Cell` と呼ばれるコンポーネントから成り立っています。
-| i2b2のロゴマークが蜂の巣であることが象徴しているように、i2b2は蜂の巣の小部屋(cell)が集まって一つの蜂の巣(Hive)のようにシステムを構成しています。
+| i2b2のロゴマークが蜂の巣であるように、i2b2は蜂の巣の小部屋(cell)が集まって一つの蜂の巣(Hive)のようになってシステムを構成しています。
 | なので、i2b2のCellの全体構成を **i2b2 Hive** と呼びます。
 | それぞれのCellは特定の機能を担当し、連携してi2b2システム全体を構成します。
 | 以下にi2b2 Hiveを構成する主要なCellを示します。
