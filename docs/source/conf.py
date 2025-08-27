@@ -40,9 +40,7 @@ autodoc_default_options = {}
 html_css_files = [
     "custom_css.css",
 ]
-html_js_files = [
-    "custom_js.js",
-]
+html_js_files = []
 
 # -- Hide or show the Sphinx link in the HTML output --
 html_show_sphinx = False
