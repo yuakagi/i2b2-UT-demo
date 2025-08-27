@@ -6,17 +6,10 @@ PATIENT_DIMENSIONテーブルについて
 .. figure:: /_static/images/common_images/illustrations/patient_on_bed.svg
    :alt: patient icon
    :width: 200px
-   :align: left
+   :align: center
 
    PATIENT_DIMENSIONは患者の基本情報を保存するテーブルです。
   
-|
-|
-|
-|
-|
-|
-
 PATIENT_DIMENSIONの役割は？
 ================================
 
