@@ -3,15 +3,36 @@
 PATIENT_DIMENSIONテーブルについて
 ***********************************
 
-| PATIENT_DIMENSIONは、Star Schemaを構成するテーブル群の一つであり、i2b2データベース内の患者を表現するために使用します。
-| このテーブルは、患者の識別子、性別、生年月日、死亡日などの属性を含み、患者に関連する事象データ（OBSERVATION_FACTテーブル）と結びつけるために使用されます。
+.. figure:: /_static/images/common_images/illustrations/patient_on_bed.svg
+   :alt: patient icon
+   :width: 200px
+   :align: left
 
+   PATIENT_DIMENSIONは患者の基本情報を保存するテーブルです。
+  
+|
+|
+|
+|
+|
+|
+
+PATIENT_DIMENSIONの役割は？
+================================
+
+| PATIENT_DIMENSIONテーブルは、i2b2データベース内で患者を一意に識別し、その基本的な属性情報を保存します。
+
+PATIENT_DIMENSIONはどこにある？
+================================
+
+| **i2b2のData Repository (CRC) Cellのスキーマに存在** します。
+| データベース名が `i2b2`でCRC Cell用のスキーマ名が `i2b2demodata` の場合、 `i2b2.i2b2demodata.PATIENT_DIMENSION` としてアクセスします。
+
+PATIENT_DIMENSIONのテーブル定義
+================================
+
+| デフォルトのPATIENT_DIMENSIONテーブルの構造は以下の通りです。
 | 必要に応じて、数に制限なく列を追加することが許容されています。 
-
-デフォルトのテーブル構造
-======================
-
-デフォルトのPATIENT_DIMENSIONテーブルの構造は以下の通りです。
 
 .. note::
    
@@ -62,7 +83,7 @@ PATIENT_DIMENSIONテーブルについて
      - datetime
      - 患者の死亡日。NULL 可。
      - | PPR^ZD1のPRB-15(プロブレムのライフサイクル状態の 日付／時刻)、
-       | 死亡退院ではADT^A03のとPV1-45(退院日時)で表現可能。
+       | 死亡退院ではADT^A03のPV1-45(退院日時)で表現可能。
    * - SEX_CD*
      - 
      - varchar(50)
@@ -75,8 +96,8 @@ PATIENT_DIMENSIONテーブルについて
      - 年齢（年単位）。
      - | 直接の対応なし。
        | ADT^A08等のPID-7(生年月日)から計算可能だが、
-       | 年齢は時間とともに変化するため、
-       | 静的な値として保存することはしない方が良いかもしれない。
+       | 年齢は静的な値として保存しない方が
+       | 良いかもしれない。
    * - LANGUAGE_CD*
      - 
      - varchar(50)
