@@ -7,7 +7,7 @@ OBSERVATION_FACTテーブルについて
    :width: 200px
    :align: center
    
-   `OBSERVATION_FACT` はStar Schemaの中心的テーブルで、臨床観測値データを保存します。
+   `OBSERVATION_FACT` はStar Schemaの中心で、臨床観測値データを保存します。
 
 OBSERVATION_FACTの役割は？
 ==========================
@@ -31,16 +31,12 @@ OBSERVATION_FACTのテーブル定義
 
 .. note::
 
-   - **複合主キー**（一般的には以下7列）:
-     `ENCOUNTER_NUM`, `CONCEPT_CD`, `PATIENT_NUM`, `PROVIDER_ID`, `START_DATE`, `MODIFIER_CD`, `INSTANCE_NUM`
-   - 値表現は `VALTYPE_CD` により解釈が分かれます（数値・短文・生テキスト）。  
-     例: 数値なら `NVAL_NUM`、短いテキスト/列挙値なら `TVAL_CHAR` を使用。
+   - **複合主キー** : `ENCOUNTER_NUM`, `CONCEPT_CD`, `PATIENT_NUM`, `PROVIDER_ID`, `START_DATE`, `MODIFIER_CD`, `INSTANCE_NUM` の7列の組み合わせ。
    - UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_ID はi2b2に共通のデータ管理用メタ列です。
 
 .. warning::
 
-   - **一意性**: 複合主キーのいずれかが欠けたり矛盾すると、一意性が保てず、重複行の原因になります。
-   - **MODIFIERとINSTANCE**: 同一の `CONCEPT_CD` に対して複数の修飾子を持つ場合、`MODIFIER_CD` は行ごとに異なり、`INSTANCE_NUM` が同一観測グループを関連付けます。
+   - **一意性** : 複合主キーのいずれかが欠けたり矛盾すると、一意性が保てず、重複行の原因になります。
 
 .. list-table::
    :header-rows: 1
@@ -124,7 +120,7 @@ OBSERVATION_FACTのテーブル定義
    * - TVAL_CHAR
      - 
      - varchar(255)
-     - `VALTYPE_CD` に応じた文字値。  
+     - | `VALTYPE_CD` に応じた文字値。  
        | `VALTYPE_CD` が "T" または "N" の場合の時だけ使用。
        | `VALTYPE_CD = "T"` の場合: テキスト値そのもの  
        | `VALTYPE_CD = "N"` の場合: 演算子を格納する。
@@ -145,7 +141,7 @@ OBSERVATION_FACTのテーブル定義
    * - VALUEFLAG_CD
      - 
      - varchar(50)
-     - 値のフラグ。   
+     - | 値のフラグ。   
        | H = High, L = Low, A = Abnormalなど。
        | 使い方詳細は :ref:`ページ下の表 <val_columns>` を参照。
      - | SS-MIX2ではOBX-7(基準範囲), OBX-8(異常フラグ)などが対応可能。
@@ -489,13 +485,13 @@ OBSERVATION_FACTの値に関連するカラム
        | [null] (不明)
      - | 単位を格納します。
      - | その他の暗号化された情報を格納します。
-    * - B
+   * - B
      - | N/A
      - | N/A
      - | X (暗号化(encrypted)されていれば、X)
      - | N/A
      - | 生テキストデータ (Raw text)
-    * - NLP
+   * - NLP
      - | N/A
      - | N/A
      - | X (暗号化(encrypted)されていれば、X)
