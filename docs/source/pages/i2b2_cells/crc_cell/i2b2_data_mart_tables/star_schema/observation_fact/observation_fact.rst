@@ -33,6 +33,7 @@ OBSERVATION_FACTのテーブル定義
 
    - **複合主キー** : `ENCOUNTER_NUM`, `CONCEPT_CD`, `PATIENT_NUM`, `PROVIDER_ID`, `START_DATE`, `MODIFIER_CD`, `INSTANCE_NUM` の7列の組み合わせ。
    - UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_ID はi2b2に共通のデータ管理用メタ列です。
+   - **太字のカラム** は必須列です。
 
 .. warning::
 
@@ -48,25 +49,25 @@ OBSERVATION_FACTのテーブル定義
      - データ型
      - 説明
      - SS-MIX2との対応
-   * - ENCOUNTER_NUM
+   * - **ENCOUNTER_NUM**
      - PK
      - int
      - | `VISIT_DIMENSION` の `ENCNTR_NUM` と外部キーで関連付けられる。  
        | Null不可。
      - | `VISIT_DIMENSION`を参照のこと。
-   * - PATIENT_NUM
+   * - **PATIENT_NUM**
      - PK
      - int
      - | `PATIENT_DIMENSION` の `PATIENT_NUM` と外部キーで関連付けられる。
        | Null不可。
      - | `PATIENT_DIMENSION`を参照のこと。
-   * - CONCEPT_CD
+   * - **CONCEPT_CD**
      - PK
      - varchar(50)
      - | `CONCEPT_DIMENSION` の `CONCEPT_CD` と外部キーで関連付けられる。  
        | 観測された医療概念（診断、処方、検査など）を示すコード。Null不可。
      - | `CONCEPT_DIMENSION`を参照のこと。
-   * - PROVIDER_ID
+   * - **PROVIDER_ID**
      - PK
      - varchar(50)
      - | `PROVIDER_DIMENSION` の `PROVIDER_ID` と外部キーで関連付けられる。
@@ -76,7 +77,7 @@ OBSERVATION_FACTのテーブル定義
        | 一貫したルールを定めれば
        | ORC-10(入力者),ORC-12(依頼者),ORC-17(入力組織),PV1-7(主治医)
        | などが対応可能。
-   * - START_DATE
+   * - **START_DATE**
      - PK
      - datetime
      - Null不可。観測の開始日時 (mm/dd/yyyy)。
@@ -87,7 +88,7 @@ OBSERVATION_FACTのテーブル定義
        |     ORC-15(オーダー有効日),TQ1-7(投薬開始予定日)など
        | 診断 (PPR^ZD1): PBR-2(更新日時),PRB-7(診断日),PRB-16(開始日/発症日)など。
        | など。
-   * - MODIFIER_CD
+   * - **MODIFIER_CD**
      - PK
      - varchar(50)
      - | **Null許容**
@@ -98,7 +99,7 @@ OBSERVATION_FACTのテーブル定義
        | 修飾子がない場合はNULL。
        | 使い方は `ページ下の例 <modifier_usage>` を参照。
      - | `MODIFIER_DIMENSION`を参照。
-   * - INSTANCE_NUM
+   * - **INSTANCE_NUM**
      - PK
      - int
      - | **Null許容**
