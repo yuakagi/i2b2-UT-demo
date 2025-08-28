@@ -1,0 +1,833 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OBSERVATION_FACTテーブルについて &mdash; i2b2-jp  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/custom_css.css?v=77e355b0" />
+
+  
+    <link rel="shortcut icon" href="../../../../../../_static/favicon.svg"/>
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html">
+            
+              <img src="../../../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">ホーム</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tables/tables.html">i2b2のテーブル一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../i2b2_cells.html">i2b2 CellとHiveについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../manual/manual.html">各種実装マニュアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../links/links.html">役立つリンク集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../terms_of_use/terms_of_use.html">利用規約</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">i2b2-jp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">OBSERVATION_FACTテーブルについて</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="observation-fact">
+<h1>OBSERVATION_FACTテーブルについて<a class="headerlink" href="#observation-fact" title="Link to this heading"></a></h1>
+<figure class="align-center" id="id16">
+<img alt="observation fact icon" src="../../../../../../_images/pen_and_note.svg" style="width: 200px;" />
+<figcaption>
+<p><span class="caption-text"><cite>OBSERVATION_FACT</cite> はスタースキーマのファクトテーブルで、臨床観測値データを保存します。</span><a class="headerlink" href="#id16" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id1">
+<h2>OBSERVATION_FACTの役割は？<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">スタースキーマにおける <strong>ファクトテーブル</strong> です。</div>
+<div class="line">1行が「患者の1回の受診(visit)中に記録された1つの観測値」を表します。</div>
+<div class="line">ほとんどのクエリは、OBSERVATION_FACT と1つ以上のディメンション・テーブル（PATIENT_DIMENSION、VISIT_DIMENSION、PROVIDER_DIMENSION、CONCEPT_DIMENSION、MODIFIER_DIMENSION）を結合して実行します。</div>
+</div>
+</section>
+<section id="id2">
+<h2>OBSERVATION_FACTはどこにある？<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><strong>i2b2のData Repository (CRC) Cellのスキーマに存在</strong> します。</div>
+<div class="line">例として、データベース名が <cite>i2b2</cite>、CRC Cell用のスキーマ名が <cite>i2b2demodata</cite> の場合、</div>
+<div class="line"><strong>`i2b2.i2b2demodata.OBSERVATION_FACT`</strong> としてアクセスします。</div>
+</div>
+</section>
+<section id="id3">
+<h2>OBSERVATION_FACTのテーブル定義<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">代表的な列構成は以下の通りです。</div>
+<div class="line">主キーは <strong>複合主キー</strong> で、同一の観測を一意に識別します（下表の「PK」欄を参照）。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><strong>複合主キー</strong> : <cite>ENCOUNTER_NUM</cite>, <cite>CONCEPT_CD</cite>, <cite>PATIENT_NUM</cite>, <cite>PROVIDER_ID</cite>, <cite>START_DATE</cite>, <cite>MODIFIER_CD</cite>, <cite>INSTANCE_NUM</cite> の7列の組み合わせ。</p></li>
+<li><p>UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_ID はi2b2に共通のデータ管理用メタ列です。</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p><strong>一意性</strong> : 複合主キーのいずれかが欠けたり矛盾すると、一意性が保てず、重複行の原因になります。</p></li>
+</ul>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>列名</p></th>
+<th class="head"><p>キー</p></th>
+<th class="head"><p>データ型</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>SS-MIX2との対応</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p><strong>ENCOUNTER_NUM</strong></p></th>
+<td><p>PK</p></td>
+<td><p>int</p></td>
+<td><div class="line-block">
+<div class="line"><cite>VISIT_DIMENSION</cite> の <cite>ENCNTR_NUM</cite> と外部キーで関連付けられる。</div>
+<div class="line">Null不可。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a href="#id4"><span class="problematic" id="id5">`</span></a>VISIT_DIMENSION`を参照のこと。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p><strong>PATIENT_NUM</strong></p></th>
+<td><p>PK</p></td>
+<td><p>int</p></td>
+<td><div class="line-block">
+<div class="line"><cite>PATIENT_DIMENSION</cite> の <cite>PATIENT_NUM</cite> と外部キーで関連付けられる。</div>
+<div class="line">Null不可。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a href="#id6"><span class="problematic" id="id7">`</span></a>PATIENT_DIMENSION`を参照のこと。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>CONCEPT_CD</strong></p></th>
+<td><p>PK</p></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line"><cite>CONCEPT_DIMENSION</cite> の <cite>CONCEPT_CD</cite> と外部キーで関連付けられる。</div>
+<div class="line">観測された医療概念（診断、処方、検査など）を示すコード。Null不可。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a href="#id8"><span class="problematic" id="id9">`</span></a>CONCEPT_DIMENSION`を参照のこと。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p><strong>PROVIDER_ID</strong></p></th>
+<td><p>PK</p></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line"><cite>PROVIDER_DIMENSION</cite> の <cite>PROVIDER_ID</cite> と外部キーで関連付けられる。</div>
+<div class="line">実施者（医療者・診療科等）の識別子。Null不可。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">i2b2内での医療提供者識別子を示すもの。</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しないが、</div>
+<div class="line">一貫したルールを定めれば</div>
+<div class="line">ORC-10(入力者),ORC-12(依頼者),ORC-17(入力組織),PV1-7(主治医)</div>
+<div class="line">などが対応可能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>START_DATE</strong></p></th>
+<td><p>PK</p></td>
+<td><p>datetime</p></td>
+<td><p>Null不可。観測の開始日時 (mm/dd/yyyy)。</p></td>
+<td><div class="line-block">
+<div class="line">SS-MIX2の各種日時フィールドと対応可能。</div>
+<div class="line">検体検査結果 (OUL^R22): SPM-17(採取日時),</div>
+<div class="line-block">
+<div class="line">OBX-14(検査日時),OBR-22(報告/更新日時)など</div>
+</div>
+<div class="line">処方・注射オーダー (RDE^O11): ORC-9(オーダー日時),</div>
+<div class="line-block">
+<div class="line">ORC-15(オーダー有効日),TQ1-7(投薬開始予定日)など</div>
+</div>
+<div class="line">診断 (PPR^ZD1): PBR-2(更新日時),PRB-7(診断日),PRB-16(開始日/発症日)など。</div>
+<div class="line">など。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p><strong>MODIFIER_CD</strong></p></th>
+<td><p>PK</p></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Null許容</strong></div>
+<div class="line"><cite>MODIFIER_DIMENSION</cite> の <cite>MODIFIER_CD</cite> と外部キーで関連付けられる。</div>
+<div class="line">概念の修飾子（例: ROUTE, DOSE など）。</div>
+<div class="line">対応する値（ DOSEでは「100」mg、ROUTEでは「PO」など）はしばしば</div>
+<div class="line"><cite>TVAL_CHAR</cite> / <cite>NVAL_NUM</cite> などの値列に格納される。</div>
+<div class="line">修飾子がない場合はNULL。</div>
+<div class="line">使い方は <cite>ページ下の例 &lt;how_to_use_modifier&gt;</cite> を参照。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a href="#id10"><span class="problematic" id="id11">`</span></a>MODIFIER_DIMENSION`を参照。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p><strong>INSTANCE_NUM</strong></p></th>
+<td><p>PK</p></td>
+<td><p>int</p></td>
+<td><div class="line-block">
+<div class="line"><strong>Null許容</strong></div>
+<div class="line">同一 <cite>CONCEPT_CD</cite> に複数の修飾子を紐づけるためのインスタンス番号。</div>
+<div class="line">適応する場合、各行は異なる <cite>MODIFIER_CD</cite> を持ち、</div>
+<div class="line">関連行は同じ <cite>INSTANCE_NUM</cite> をもつ。</div>
+<div class="line">修飾子がない場合はNULL。</div>
+<div class="line">使い方は <cite>ページ下の例 &lt;how_to_use_modifier&gt;</cite> を参照。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">i2b2独自。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>VALTYPE_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line">値の形式。</div>
+<div class="line">N = 数値型  T = 文字列 (列挙型/短文)など</div>
+<div class="line">詳細は <a class="reference internal" href="#valtype-cd-values"><span class="std std-ref">ページ下の表</span></a> を参照。</div>
+<div class="line">B = 生のテキスト（長文/レポート等）</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">OBX-2(値型)など対応するフィールドはあるが、</div>
+<div class="line">行に応じて適切に設定すべき。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>TVAL_CHAR</p></th>
+<td></td>
+<td><p>varchar(255)</p></td>
+<td><div class="line-block">
+<div class="line"><cite>VALTYPE_CD</cite> に応じた文字値。</div>
+<div class="line"><cite>VALTYPE_CD</cite> が “T” または “N” の場合の時だけ使用。</div>
+<div class="line"><cite>VALTYPE_CD = “T”</cite> の場合: テキスト値そのもの</div>
+<div class="line"><cite>VALTYPE_CD = “N”</cite> の場合: 演算子を格納する。</div>
+<div class="line">使い方詳細は <a class="reference internal" href="#val-columns"><span class="std std-ref">ページ下の表</span></a> を参照。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">SS-MIX2の各種フィールドと対応可能。</div>
+<div class="line">検体検査結果 (OUL^R22): OBX-5(結果値)</div>
+<div class="line">など。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>NVAL_NUM</p></th>
+<td></td>
+<td><p>decimal(18,5)</p></td>
+<td><p>数値値（ <cite>VALTYPE_CD = “N”</cite> のときに使用）。</p></td>
+<td><div class="line-block">
+<div class="line">SS-MIX2の各種フィールドと対応可能。</div>
+<div class="line">検体検査結果 (OUL^R22): OBX-5(結果値)</div>
+<div class="line">処方・注射オーダー (RDE^O11): RXE-3(与薬量－最小/一回あたりの投与量),</div>
+<div class="line-block">
+<div class="line">RXE-10(調剤量),RXE-19(1 日あたりの総投与量),</div>
+<div class="line">TQ1-2(数量),</div>
+</div>
+<div class="line">など。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>VALUEFLAG_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line">値のフラグ。</div>
+<div class="line">H = High, L = Low, A = Abnormalなど。</div>
+<div class="line">使い方詳細は <a class="reference internal" href="#val-columns"><span class="std std-ref">ページ下の表</span></a> を参照。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">SS-MIX2ではOBX-7(基準範囲), OBX-8(異常フラグ)などが対応可能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>QUANTITY_NUM</p></th>
+<td></td>
+<td><p>decimal(18,5)</p></td>
+<td><div class="line-block">
+<div class="line"><cite>NVAL_NUM</cite> の値の量（数量）。</div>
+<div class="line"><cite>NVAL_NUM</cite> が値そのものを表すのに対し、</div>
+<div class="line"><cite>QUANTITY_NUM</cite> はその値の数量やカウント、</div>
+<div class="line">回数、量的情報 を補足的に保持します</div>
+<div class="line">例えば、血液検査で「赤血球数（RBC count = 4.5e6/μL）」 →</div>
+<div class="line-block">
+<div class="line">NVAL_NUM = 4.5、UNITS_CD = 10^6/μL、QUANTITY_NUM = 1（単一検査）</div>
+</div>
+<div class="line">投薬で「アスピリン 325mg 錠を 2 錠」 →</div>
+<div class="line-block">
+<div class="line">NVAL_NUM = 325、UNITS_CD = mg、QUANTITY_NUM = 2</div>
+</div>
+<div class="line"><strong>この列は使用せず実装することも多いようです</strong>。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">SS-MIX2ではデータ種別に応じて対応可能。</div>
+<div class="line">検体検査結果 (OUL^R22): 常に 1 でよいはず。</div>
+<div class="line">処方・注射オーダー (RDE^O11): TQ1-3(繰り返しパターン), RXE-10(調剤量),</div>
+<div class="line-block">
+<div class="line">RXE-19(1 日あたりの総投与量),TQ1-6(サービス時間/処方日数)</div>
+</div>
+<div class="line">などが関連。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>UNITS_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p><cite>NVAL_NUM</cite> の単位。</p></td>
+<td><div class="line-block">
+<div class="line">SS-MIX2ではデータ種別に応じて対応可能。</div>
+<div class="line">処方・注射オーダー (RDE^O11): RXE-11(調剤単位)</div>
+<div class="line">検体検査結果 (OUL^R22): OBX-6(単位)</div>
+<div class="line">など。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>END_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>観測の終了日時。</p></td>
+<td><div class="line-block">
+<div class="line">SS-MIX2の各種日時フィールドと対応可能。</div>
+<div class="line">検体検査結果 (OUL^R22): OBR-8(検査/採取終了日時),</div>
+<div class="line-block">
+<div class="line">OBX-14(検査日時),OBR-22(報告/更新日時)など</div>
+</div>
+<div class="line">処方・注射オーダー (RDE^O11): ORC-9(オーダー日時),</div>
+<div class="line-block">
+<div class="line">ORC-15(オーダー有効日),TQ1-8(終了日時)など</div>
+</div>
+<div class="line">診断 (PPR^ZD1): PRB-9(実際のプロブレム解決日付／時刻)</div>
+<div class="line">など。</div>
+<div class="line">ただし、終了日時を明確にできない事象も多いため、</div>
+<div class="line">あえて使わないという選択肢もあり得る。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>LOCATION_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>施設や外来/病棟などのロケーションコード。</p></td>
+<td><div class="line-block">
+<div class="line">ORC-13(入力場所), PV1-3(患者の所在)など。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>CONFIDENCE_NUM</p></th>
+<td></td>
+<td><p>decimal(18,5)</p></td>
+<td><p>データの確からしさ、正確性。</p></td>
+<td><p>SS-MIX2で特に対応するフィールドはない。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>OBSERVATION_BLOB</p></th>
+<td></td>
+<td><p>text</p></td>
+<td><div class="line-block">
+<div class="line">生データ/長文/その他を格納</div>
+<div class="line">多くの場合、暗号化したPHI</div>
+<div class="line">(Protected Health Information、保護対象医療情報)</div>
+<div class="line">を格納。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">SS-MIX2で特に対応するフィールドはない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>UPDATE_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>レコード最終更新日時。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内でのレコード更新日時を示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>DOWNLOAD_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>ダウンロード日時。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>IMPORT_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>インポート日時。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>SOURCESYSTEM_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>データソース識別子。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>UPLOAD_ID</p></th>
+<td></td>
+<td><p>int</p></td>
+<td><p>アップロード処理の識別子。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="modifier">
+<span id="how-to-use-modifier"></span><h2>修飾子(modifier)の使い方は？<a class="headerlink" href="#modifier" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">処方に対して投与経路(ROUTE)や用量(DOSE)など、修飾子が必要な場合があります。</div>
+<div class="line">このセクションでは、<cite>OBSERVATION_FACT</cite> テーブルにおける <strong>修飾子 (modifier)</strong> の使い方を示します。</div>
+<div class="line">特に、 <cite>&#64;</cite> がベースコンセプトを表すために必要であること、そして <cite>INSTANCE_NUM</cite> によって同日の複数の事象を区別することを説明します。</div>
+</div>
+<section id="id12">
+<h3>帝王切開手術の例<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">処置コードとしてCPTコードを例に使います。</div>
+<div class="line">CPTコードは日本ではあまり使われませんが、米国では手術・処置を表す代表的なコード体系です。</div>
+<div class="line">ここでは、公式の例から引用し、修飾子の例としてCPTコードを用います。</div>
+</div>
+<div class="line-block">
+<div class="line">患者 #123 が 2006年3月4日の入院 (#107) で帝王切開手術 (CPTコード:59622) を受けた場合:</div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>PATIENT_NUM</p></th>
+<th class="head"><p>ENCOUNTER_NUM</p></th>
+<th class="head"><p>INSTANCE_NUM</p></th>
+<th class="head"><p>CONCEPT_CD</p></th>
+<th class="head"><p>START_DATE</p></th>
+<th class="head"><p>MODIFIER_CD</p></th>
+<th class="head"><p>VALTYPE_CD</p></th>
+<th class="head"><p>TVAL_CHAR</p></th>
+<th class="head"><p>NVAL_NUM</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>123</p></th>
+<td><p>107</p></td>
+<td><p>1</p></td>
+<td><p>cpt:59622</p></td>
+<td><p>20060304</p></td>
+<td><p>&#64;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>123</p></th>
+<td><p>107</p></td>
+<td><p>1</p></td>
+<td><p>cpt:59622</p></td>
+<td><p>20060304</p></td>
+<td><p>cptmod:62</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>123</p></th>
+<td><p>107</p></td>
+<td><p>1</p></td>
+<td><p>cpt:59622</p></td>
+<td><p>20060304</p></td>
+<td><p>cptmod:AA</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>123</p></th>
+<td><p>107</p></td>
+<td><p>1</p></td>
+<td><p>cpt:59622</p></td>
+<td><p>20060304</p></td>
+<td><p>cptmod:TH</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">ここで、<cite>&#64;</cite> がベースとなる手術コードを表し、</div>
+<div class="line"><cite>cptmod:62</cite>, <cite>cptmod:AA</cite>, <cite>cptmod:TH</cite> が修飾子 (modifier) として追加されています。</div>
+</div>
+</section>
+<section id="id13">
+<h3>薬剤処方 (アスピリン) の例<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<p>患者 #123 が 2010年4月4日の外来 (#567) で <strong>325 mgのアスピリンを1日1回 (QD) 経口 (PO)</strong> で処方された場合:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>PATIENT_NUM</p></th>
+<th class="head"><p>ENCOUNTER_NUM</p></th>
+<th class="head"><p>INSTANCE_NUM</p></th>
+<th class="head"><p>CONCEPT_CD</p></th>
+<th class="head"><p>START_DATE</p></th>
+<th class="head"><p>MODIFIER_CD</p></th>
+<th class="head"><p>VALTYPE_CD</p></th>
+<th class="head"><p>TVAL_CHAR</p></th>
+<th class="head"><p>NVAL_NUM</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>1</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>&#64;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>1</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>MED:DOSE</p></td>
+<td><p>N</p></td>
+<td><p>E</p></td>
+<td><p>325</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>1</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>MED:FREQ</p></td>
+<td><p>T</p></td>
+<td><p>QD</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>1</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>MED:ROUTE</p></td>
+<td><p>T</p></td>
+<td><p>PO</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">そして、同日に <strong>83 mg アスピリン BID (1日2回) PO</strong> が追加で処方された場合、 <cite>INSTANCE_NUM</cite> を「2」として区別します:</div>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>PATIENT_NUM</p></th>
+<th class="head"><p>ENCOUNTER_NUM</p></th>
+<th class="head"><p>INSTANCE_NUM</p></th>
+<th class="head"><p>CONCEPT_CD</p></th>
+<th class="head"><p>START_DATE</p></th>
+<th class="head"><p>MODIFIER_CD</p></th>
+<th class="head"><p>VALTYPE_CD</p></th>
+<th class="head"><p>TVAL_CHAR</p></th>
+<th class="head"><p>NVAL_NUM</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>2</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>&#64;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>2</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>MED:DOSE</p></td>
+<td><p>N</p></td>
+<td><p>E</p></td>
+<td><p>83</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>2</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>MED:FREQ</p></td>
+<td><p>T</p></td>
+<td><p>BID</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>123</p></th>
+<td><p>567</p></td>
+<td><p>2</p></td>
+<td><p>med:aspirin</p></td>
+<td><p>20100404</p></td>
+<td><p>MED:ROUTE</p></td>
+<td><p>T</p></td>
+<td><p>PO</p></td>
+<td><p>&lt;null&gt;</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="valtype-cd">
+<span id="valtype-cd-values"></span><h2>VALTYPE_CDがとりうる値<a class="headerlink" href="#valtype-cd" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><cite>VALTYPE_CD</cite> 列は、観測値のデータ型を示します。</div>
+<div class="line">とりうる値は以下です。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>nullと&#64;の使い分けがドキュメントからはっきりしません。</p></li>
+</ul>
+</div>
+<table class="docutils align-default" style="width: 600px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>&#64;</p></th>
+<td><p>該当なし</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>N</p></th>
+<td><p>数値型 (Numeric)</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>T</p></th>
+<td><p>文字列型 (Text) - 列挙型/短文</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>B</p></th>
+<td><p>生テキスト (Blob) - 長文/レポート等</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>NLP</p></th>
+<td><p>NLP結果のXMLオブジェクト</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="val-columns">
+<span id="id14"></span><h2>OBSERVATION_FACTの値に関連するカラム<a class="headerlink" href="#val-columns" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">OBSERVATION_FACTテーブルには、値に関連する6つのカラムがあります。</div>
+<div class="line">以下では、それぞれのカラムについて補足情報を示します。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><cite>VALTYPE_CD=N</cite> の時、 特に演算子が不要と思われる場合もデフォルトで <cite>E</cite> を入れるようです。</p></li>
+<li><p>「観察値が <cite>NVAL_NUM</cite> の値の通り」という意味だと思われます。</p></li>
+</ul>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>VALTYPE_CD</p></th>
+<th class="head"><p>TVAL_CHAR</p></th>
+<th class="head"><p>NVAL_NUM</p></th>
+<th class="head"><p>VALUEFLAG_CD</p></th>
+<th class="head"><p>UNITS_CD</p></th>
+<th class="head"><p>OBS_BLOB</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>N</p></th>
+<td><div class="line-block">
+<div class="line">演算子を格納します。</div>
+<div class="line">使用できる演算子は:</div>
+<div class="line-block">
+<div class="line">E:Equals (=)</div>
+<div class="line">NE:Not Equals (≠)</div>
+<div class="line">L:Less Than (&lt;)</div>
+<div class="line">LE:Less Than or Equals (≤)</div>
+<div class="line">G:Greater Than (&gt;)</div>
+<div class="line">GE:Greater Than or Equals (≥)</div>
+</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">実際の数値を格納します。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">数値に関連するフラグ。</div>
+<div class="line">H (高)</div>
+<div class="line">L (低)</div>
+<div class="line">N (正常)</div>
+<div class="line">[null] (不明)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">単位を格納します。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">その他の暗号化された情報を格納します。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>T</p></th>
+<td><div class="line-block">
+<div class="line">実際の短いテキスト値を格納します。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">テキストに関連するフラグ。</div>
+<div class="line">A (異常)</div>
+<div class="line">N (正常)</div>
+<div class="line">[null] (不明)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">単位を格納します。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">その他の暗号化された情報を格納します。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>B</p></th>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">X (暗号化(encrypted)されていれば、X)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">生テキストデータ (Raw text)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>NLP</p></th>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">X (暗号化(encrypted)されていれば、X)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">N/A</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">NLPの結果のXMLオブジェクト</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id15">
+<h2>参考文献<a class="headerlink" href="#id15" title="Link to this heading"></a></h2>
+<p>このページは主に <a class="reference external" href="https://community.i2b2.org/wiki/">i2b2 Community Wiki</a> の内容をもとに作成しました。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025–present, i2b2 Japan website contributors.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

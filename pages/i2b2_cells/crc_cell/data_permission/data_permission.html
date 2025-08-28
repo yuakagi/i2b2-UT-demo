@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ユーザーロールとデータアクセス権限 &mdash; i2b2-jp  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom_css.css?v=77e355b0" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">ホーム</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tables/tables.html">i2b2のテーブル一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../i2b2_cells.html">i2b2 CellとHiveについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../manual/manual.html">各種実装マニュアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../links/links.html">役立つリンク集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms_of_use/terms_of_use.html">利用規約</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">i2b2-jp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ユーザーロールとデータアクセス権限</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>ユーザーロールとデータアクセス権限<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<figure class="align-center" id="id3">
+<img alt="i2b2 User Roles and Data Permissions" src="../../../../_images/user_permission.svg" style="width: 200px;" />
+<figcaption>
+<p><span class="caption-text">CRC Cellはユーザーロールに基づいて、データへのアクセス権限を制御しています。</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="crc-cell">
+<h2>1. CRC Cellにおけるユーザーロールとは?<a class="headerlink" href="#crc-cell" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">CRC Cellは、ユーザーの役割（ロール）に基づいて、データの提示方法や範囲を決定します。</div>
+<div class="line">ロールはProject Management (PM)セルでユーザーごとに指定されます。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>i2b2で <cite>user role</cite> という場合、二つの意味があります。</p></li>
+<li><p>一つは <strong>Data Protection Trackのuser role</strong> とも言われるもので、このページで解説します。</p></li>
+<li><p>もう一つは <strong>Hive Management Trackのuser role</strong> とも言われます。これはi2b2の他のユーザーのクエリ結果にアクセスできるかどうかを制御します。このページでは解説しません。</p></li>
+</ul>
+</div>
+</section>
+<section id="id2">
+<h2>2. CRC Cellのユーザーロールの詳細<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">以下の表は、ユーザーロールとアクセス権限を、アクセス可能範囲が少ないものから多いものへ順にまとめたものです。</div>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>ロール</p></th>
+<th class="head"><p>意味</p></th>
+<th class="head"><p>アクセス説明</p></th>
+<th class="head"><p>例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>DATA_OBFSC</p></th>
+<td><p>OBFSC = Obfuscated</p></td>
+<td><div class="line-block">
+<div class="line">集計結果をだけを参照でき、値はマスキングされる。</div>
+<div class="line">例: 患者数。</div>
+<div class="line">同一クエリの実行回数には制限があり、上限を超えるとアカウントがロックされ、管理者のみ解除可能。</div>
+</div>
+</td>
+<td><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;query_result_instance&gt;</span>
+<span class="w">  </span><span class="nt">&lt;result_instance_id&gt;</span>0<span class="nt">&lt;/result_instance_id&gt;</span>
+<span class="w">  </span><span class="nt">&lt;query_instance_id&gt;</span>0<span class="nt">&lt;/query_instance_id&gt;</span>
+<span class="w">  </span><span class="nt">&lt;query_result_type&gt;</span>
+<span class="w">    </span><span class="nt">&lt;name&gt;</span>PATIENTSET<span class="nt">&lt;/name&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/query_result_type&gt;</span>
+<span class="w">  </span><span class="nt">&lt;set_size&gt;</span>101<span class="nt">&lt;/set_size&gt;</span>
+<span class="w">  </span><span class="nt">&lt;obfuscate_method&gt;</span>OBSUBTOTAL<span class="nt">&lt;/obfuscate_method&gt;</span>
+<span class="w">  </span><span class="nt">&lt;start_date&gt;</span>2000-12-30T00:00:00<span class="nt">&lt;/start_date&gt;</span>
+<span class="nt">&lt;/query_result_instance&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>DATA_AGG</p></th>
+<td><p>AGG = Aggregated</p></td>
+<td><div class="line-block">
+<div class="line">集計結果を参照可能。値はマスキングされない。</div>
+<div class="line">実行回数の制限もない。</div>
+</div>
+</td>
+<td><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;query_result_instance&gt;</span>
+<span class="w">  </span><span class="nt">&lt;result_instance_id&gt;</span>0<span class="nt">&lt;/result_instance_id&gt;</span>
+<span class="w">  </span><span class="nt">&lt;query_instance_id&gt;</span>0<span class="nt">&lt;/query_instance_id&gt;</span>
+<span class="w">  </span><span class="nt">&lt;query_result_type&gt;</span>
+<span class="w">    </span><span class="nt">&lt;name&gt;</span>PATIENTSET<span class="nt">&lt;/name&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/query_result_type&gt;</span>
+<span class="w">  </span><span class="nt">&lt;set_size&gt;</span>101<span class="nt">&lt;/set_size&gt;</span>
+<span class="w">  </span><span class="nt">&lt;obfuscate_method/&gt;</span>
+<span class="w">  </span><span class="nt">&lt;start_date&gt;</span>2000-12-30T00:00:00<span class="nt">&lt;/start_date&gt;</span>
+<span class="nt">&lt;/query_result_instance&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>DATA_LDS</p></th>
+<td><p>LDS = Limited Data Set</p></td>
+<td><div class="line-block">
+<div class="line">暗号化された列以外のすべての項目を参照可能。</div>
+<div class="line">暗号化される代表例: factテーブルやdimensionテーブルのblob列。</div>
+</div>
+</td>
+<td><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;observation_set</span><span class="w"> </span><span class="na">blob=</span><span class="s">&quot;false&quot;</span><span class="w"> </span><span class="na">onlykeys=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>DATA_DEID</p></th>
+<td><p>DEID = De-identified Data</p></td>
+<td><div class="line-block">
+<div class="line">暗号化された列を含め、すべての項目を参照可能。</div>
+<div class="line">暗号化される代表例: blob列。</div>
+</div>
+</td>
+<td><div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;observation_set</span><span class="w"> </span><span class="na">blob=</span><span class="s">&quot;true&quot;</span><span class="w"> </span><span class="na">onlykeys=</span><span class="s">&quot;false&quot;</span><span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>DATA_PROT</p></th>
+<td><p>PROT = Protected Data</p></td>
+<td><div class="line-block">
+<div class="line">すべてのデータにアクセス可能。</div>
+<div class="line">Identity Management Cell内に保存されている患者識別情報も含む。</div>
+</div>
+</td>
+<td><p>(PDO例: すべての情報が返却される)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references">
+<h2>参考文献 (References)<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>このページは主に <a class="reference external" href="https://community.i2b2.org/wiki/">i2b2 Community Wiki</a> の内容をもとに作成しました。
+一部の例などは、そのまま引用をしています。詳細はWikiの該当ページをご覧ください。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025–present, i2b2 Japan website contributors.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

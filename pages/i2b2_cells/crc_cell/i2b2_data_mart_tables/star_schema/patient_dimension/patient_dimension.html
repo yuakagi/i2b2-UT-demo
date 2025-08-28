@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PATIENT_DIMENSIONテーブルについて &mdash; i2b2-jp  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/custom_css.css?v=77e355b0" />
+
+  
+    <link rel="shortcut icon" href="../../../../../../_static/favicon.svg"/>
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html">
+            
+              <img src="../../../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">ホーム</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tables/tables.html">i2b2のテーブル一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../i2b2_cells.html">i2b2 CellとHiveについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../manual/manual.html">各種実装マニュアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../links/links.html">役立つリンク集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../terms_of_use/terms_of_use.html">利用規約</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">i2b2-jp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PATIENT_DIMENSIONテーブルについて</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="patient-dimension">
+<h1>PATIENT_DIMENSIONテーブルについて<a class="headerlink" href="#patient-dimension" title="Link to this heading"></a></h1>
+<figure class="align-center" id="id5">
+<img alt="patient icon" src="../../../../../../_images/patient_on_bed.svg" style="width: 200px;" />
+<figcaption>
+<p><span class="caption-text">PATIENT_DIMENSIONは患者の基本情報を保存するテーブルです。</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id1">
+<h2>PATIENT_DIMENSIONの役割は？<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">i2b2データベース内で患者を一意に識別し、その基本的な属性情報を保存します。</div>
+</div>
+</section>
+<section id="id2">
+<h2>PATIENT_DIMENSIONはどこにある？<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><strong>i2b2のData Repository (CRC) Cellのスキーマに存在</strong> します。</div>
+<div class="line">データベース名が <cite>i2b2`でCRC Cell用のスキーマ名が `i2b2demodata</cite> の場合、 <strong>`i2b2.i2b2demodata.PATIENT_DIMENSION` などとしてアクセス</strong> します。</div>
+</div>
+</section>
+<section id="id3">
+<h2>PATIENT_DIMENSIONのテーブル定義<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">デフォルトのPATIENT_DIMENSIONテーブルの構造は以下の通りです。</div>
+<div class="line">必要に応じて、数に制限なく列を追加することが許容されています。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>RACE_CDやSEX_CDなどの_CDで終わる列は、コード型の値をとります。 <strong>これらの列で使うコード体系はOntology CellのDBスキーマであるmetadata内のテーブルで管理します。</strong></p></li>
+<li><p>UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_IDの５つの列は、i2b2の多くのテーブルで共通のデータ管理用の列です。</p></li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>＊が付いた列(SEX_CDなど)は必須ではない列のようですが、それを明示した文献が見つけられていません。</p></li>
+<li><p>STATECITYZIP_PATHはSTATECITYZIP_CDという名称でも記載されていることがあり、どちらが正しいのかはっきりしていません。</p></li>
+</ul>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>列名</p></th>
+<th class="head"><p>キー</p></th>
+<th class="head"><p>データ型</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>SS-MIX2との対応</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p><strong>PATIENT_NUM</strong></p></th>
+<td><p>PK</p></td>
+<td><p>int</p></td>
+<td><p>DB内での患者の一意な識別子。PK。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内での患者識別子を示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>VITAL_STATUS_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line">患者の生存状態を示すコード。これは標準化されたコードはないが、</div>
+<div class="line">推奨されるコード表記法がある。 詳細は下方参照。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">PPR^ZD1のPRB-14(プロブレムのライフサイクル状態)、</div>
+<div class="line">ADT^A03のPV1-36(退院時の状態)で間接的に表現可能。</div>
+<div class="line">しかし、SS-MIX2では患者の生存状態の格納を直接目的にしたフィールドはなく、</div>
+<div class="line">上記のフィールドも欠損していることがあるため、</div>
+<div class="line">SS-MIX2で患者の生存状態を正確に表現することは難しい。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>BIRTH_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><div class="line-block">
+<div class="line">生年月日</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">ADT^A08等のPID-7(生年月日)。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>DEATH_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>患者の死亡日。NULL 可。</p></td>
+<td><div class="line-block">
+<div class="line">PPR^ZD1のPRB-15(プロブレムのライフサイクル状態の 日付／時刻)、</div>
+<div class="line">死亡退院ではADT^A03のPV1-45(退院日時)で表現可能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>SEX_CD*</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>性別コード。</p></td>
+<td><div class="line-block">
+<div class="line">ADT^A08等のPID-8(性別)。</div>
+<div class="line">SS-MIXではM:男性、F:女性、O:その他、U:不明の4つのコードを使用。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>AGE_IN_YEARS_NUM*</p></th>
+<td></td>
+<td><p>int</p></td>
+<td><p>年齢（年単位）。</p></td>
+<td><div class="line-block">
+<div class="line">直接の対応なし。</div>
+<div class="line">ADT^A08等のPID-7(生年月日)から計算可能だが、</div>
+<div class="line">年齢は静的な値として保存しない方が</div>
+<div class="line">良いかもしれない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>LANGUAGE_CD*</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>言語コード。</p></td>
+<td><p>対応なし。SS-MIX2では患者言語を扱わない。</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>RACE_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>人種コード。</p></td>
+<td><p>対応なし。SS-MIX2では人種を扱わない。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>MARITAL_STATUS_CD*</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>婚姻状態コード。</p></td>
+<td><p>対応なし。SS-MIX2では婚姻状態を扱わない。</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>RELIGION_CD*</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>宗教コード。任意列。</p></td>
+<td><p>対応なし。SS-MIX2では宗教を扱わない。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>ZIP_CD*</p></th>
+<td></td>
+<td><p>varchar(10)</p></td>
+<td><p>郵便番号。</p></td>
+<td><div class="line-block">
+<div class="line">ADT^A08等のPID-11(住所)の一部として表現可能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>STATECITYZIP_PATH</p></th>
+<td></td>
+<td><p>varchar(700)</p></td>
+<td><div class="line-block">
+<div class="line">階層型地理コード。</div>
+<div class="line">患者の住所をある程度のレベルまで階層構造で格納。</div>
+<div class="line">東京都文京区本郷ならば <cite>TOKYO\BUNKYO_KU\HONGO</cite> のように。</div>
+<div class="line">文京区の患者だけ取得したければ、 <cite>TOKYO\BUNKYO_KU*</cite></div>
+<div class="line">のようにワイルドカード「*」で検索することを目的にしている。</div>
+<div class="line"><strong>スラッシュ(/)でなくバックスラッシュ(\)</strong> で区切ることに注意。</div>
+<div class="line">この値もOntology Cellのmetadata内で管理するとの記載あり。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">ADT^A08等のPID-11(住所)の一部として表現可能。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>PATIENT_BLOB</p></th>
+<td></td>
+<td><p>text</p></td>
+<td><div class="line-block">
+<div class="line">任意の拡張情報を格納するフィールド。</div>
+<div class="line">XML形式で格納するようです。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">対応なし。追加情報をどうしても患者テーブルに格納したい場合は、</div>
+<div class="line">ここに格納するより新規に列を追加した方が良いと思われる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>UPDATE_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>レコードが最終更新された日時。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内でのレコード更新日時を示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>DOWNLOAD_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>レコードがシステムにダウンロードされた日時。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内でのレコードダウンロード日時を示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>IMPORT_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>レコードがインポートされた日時。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内でのレコードインポート日時を示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>SOURCESYSTEM_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>データのソースシステムを識別するコード。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内でのデータソース識別コードを示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>UPLOAD_ID</p></th>
+<td></td>
+<td><p>int</p></td>
+<td><p>アップロード処理の識別子。</p></td>
+<td><div class="line-block">
+<div class="line">i2b2内でのアップロード処理識別子を示すものであり、</div>
+<div class="line">SS-MIX2のデータ項目とは直接対応しない。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vital-status-cd">
+<h2>VITAL_STATUS_CDの推奨表記法<a class="headerlink" href="#vital-status-cd" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">VITAL_STATUS_CDは患者の生存状態を示すコードですが、標準化されたコード体系は存在しません。</div>
+<div class="line">しかし、i2b2は <strong>2文字コード</strong> で表記することを推奨しています。1文字目は死亡日の精度、2文字目は生年月日の精度を表します。</div>
+<div class="line">例えば、患者が生存していて生年月日が日単位で正確にわかっている場合、コードは “ND” となります。</div>
+<div class="line">以下に推奨されるコード表記法を示します。</div>
+<div class="line">(実務上は、生存が”_D”, 死亡は”YD”とすることが多いかと思います。)</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>下の表で <cite>*</cite> は二文字目に生年月日に関するコードのことであり、必要に応じて入れることを示しています。</p></li>
+<li><p>下の表で <cite>_</cite> は一文字目の死亡日に関するコードのことであり、必要に応じて入れることを示しています。</p></li>
+</ul>
+</div>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>値</p></th>
+<th class="head"><p>説明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>N*</p></td>
+<td><p>生存（DEATH_DATE が NULL）</p></td>
+</tr>
+<tr class="row-odd"><td><p>U*</p></td>
+<td><p>不明（DEATH_DATE が NULL）</p></td>
+</tr>
+<tr class="row-even"><td><p>Z*</p></td>
+<td><p>死亡（DEATH_DATE が NULL）</p></td>
+</tr>
+<tr class="row-odd"><td><p>Y*</p></td>
+<td><p>死亡（DEATH_DATE 日単位で正確）</p></td>
+</tr>
+<tr class="row-even"><td><p>M*</p></td>
+<td><p>死亡（DEATH_DATE 月単位で正確）</p></td>
+</tr>
+<tr class="row-odd"><td><p>X*</p></td>
+<td><p>死亡（DEATH_DATE 年単位で正確）</p></td>
+</tr>
+<tr class="row-even"><td><p>R*</p></td>
+<td><p>死亡（DEATH_DATE 時単位で正確）</p></td>
+</tr>
+<tr class="row-odd"><td><p>T*</p></td>
+<td><p>死亡（DEATH_DATE 分単位で正確）</p></td>
+</tr>
+<tr class="row-even"><td><p>S*</p></td>
+<td><p>死亡（DEATH_DATE 秒単位で正確）</p></td>
+</tr>
+<tr class="row-odd"><td><p>_L</p></td>
+<td><p>不明（BIRTH_DATE が NULL）</p></td>
+</tr>
+<tr class="row-even"><td><p>_D</p></td>
+<td><p>BIRTH_DATE が 日単位で正確</p></td>
+</tr>
+<tr class="row-odd"><td><p>_B</p></td>
+<td><p>BIRTH_DATE が 月単位で正確</p></td>
+</tr>
+<tr class="row-even"><td><p>_F</p></td>
+<td><p>BIRTH_DATE が 年単位で正確</p></td>
+</tr>
+<tr class="row-odd"><td><p>_H</p></td>
+<td><p>BIRTH_DATE が 時単位で正確</p></td>
+</tr>
+<tr class="row-even"><td><p>_I</p></td>
+<td><p>BIRTH_DATE が 分単位で正確</p></td>
+</tr>
+<tr class="row-odd"><td><p>_C</p></td>
+<td><p>BIRTH_DATE が 秒単位で正確</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id4">
+<h2>参考文献<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>このページは主に <a class="reference external" href="https://community.i2b2.org/wiki/">i2b2 Community Wiki</a> の内容をもとに作成しました。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025–present, i2b2 Japan website contributors.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

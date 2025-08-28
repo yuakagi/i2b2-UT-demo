@@ -1,0 +1,353 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MODIFIER_DIMENSIONテーブルについて &mdash; i2b2-jp  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../../../_static/custom_css.css?v=77e355b0" />
+
+  
+    <link rel="shortcut icon" href="../../../../../../_static/favicon.svg"/>
+      <script src="../../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html">
+            
+              <img src="../../../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../index.html">ホーム</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tables/tables.html">i2b2のテーブル一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../i2b2_cells.html">i2b2 CellとHiveについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../manual/manual.html">各種実装マニュアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../links/links.html">役立つリンク集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../terms_of_use/terms_of_use.html">利用規約</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">i2b2-jp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MODIFIER_DIMENSIONテーブルについて</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="modifier-dimension">
+<h1>MODIFIER_DIMENSIONテーブルについて<a class="headerlink" href="#modifier-dimension" title="Link to this heading"></a></h1>
+<figure class="align-center" id="id7">
+<img alt="modifier dimension icon" src="../../../../../../_images/paint_and_brush.svg" style="width: 200px;" />
+<figcaption>
+<p><span class="caption-text"><cite>MODIFIER_DIMENSION</cite> は処方量、投与経路など修飾子を管理します。</span><a class="headerlink" href="#id7" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="id1">
+<h2>MODIFIER_DIMENSIONの役割は？<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Star Schemaにおける <strong>ディメンションテーブル</strong> の1つです。</div>
+<div class="line">各行は1つの修飾子（modifier）を表します。</div>
+<div class="line">概念(CONCEPT_DIMENSION)に「修飾子」を付与することで、観測値に追加の意味を与えます。</div>
+<div class="line">例: 薬剤であれば「投与経路 (ROUTE)」「投与量 (DOSE)」、診断であれば「確定/疑い」など。</div>
+<div class="line">オントロジーセル (Ontology Cell) が修飾子の適用対象（概念階層のどのレベルで適用されるか）を管理します。</div>
+</div>
+</section>
+<section id="id2">
+<h2>MODIFIER_DIMENSIONはどこにある？<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><strong>i2b2のData Repository (CRC) Cellのスキーマに存在</strong> します。</div>
+<div class="line">例: データベース名が <cite>i2b2</cite>、CRC Cell用のスキーマ名が <cite>i2b2demodata</cite> の場合、</div>
+<div class="line"><strong>`i2b2.i2b2demodata.MODIFIER_DIMENSION`</strong> としてアクセスします。</div>
+</div>
+</section>
+<section id="id3">
+<h2>MODIFIER_DIMENSIONのテーブル定義<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line"><cite>MODIFIER_DIMENSION</cite> テーブルの代表的な列構成は以下の通りです。</div>
+<div class="line"><strong>主キーは `MODIFIER_PATH`</strong> です。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><strong>必須列</strong> は <cite>MODIFIER_PATH</cite>, <cite>MODIFIER_CD</cite>, <cite>NAME_CHAR</cite> の3つです。</p></li>
+<li><p>UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_ID はi2b2に共通のメタ列です。</p></li>
+</ul>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>列名</p></th>
+<th class="head"><p>キー</p></th>
+<th class="head"><p>データ型</p></th>
+<th class="head"><p>説明</p></th>
+<th class="head"><p>SS-MIX2との対応</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>MODIFIER_PATH</p></th>
+<td><p>PK</p></td>
+<td><p>varchar(700)</p></td>
+<td><div class="line-block">
+<div class="line">修飾子の階層パス。</div>
+<div class="line">例: <cite>\Medication\Frequency\</cite></div>
+<div class="line-block">
+<div class="line"><cite>\Medication\Route\</cite></div>
+</div>
+<div class="line"><strong>バックスラッシュ</strong> <cite>\</cite> を使ってください。スラッシュ <cite>/</cite> ではありません。</div>
+<div class="line">PKです。 <strong>ユニーク制限があります</strong>。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a class="reference internal" href="#ssmix2-and-modifier-fields"><span class="std std-ref">下記を参照</span></a> 。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>MODIFIER_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><div class="line-block">
+<div class="line">修飾子を表すコード。</div>
+<div class="line">例: <cite>MED:FREQ</cite>, <cite>MED:ROUTE</cite> など。</div>
+<div class="line"><cite>:</cite> で区切られた2つの部分から成り、</div>
+<div class="line">前半は修飾子の大分類、後半は小分類を表す</div>
+<div class="line">ことが慣例のようですが、単純に1や2などの</div>
+<div class="line">数字などのこともあります。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a class="reference internal" href="#ssmix2-and-modifier-fields"><span class="std std-ref">下記を参照</span></a> 。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>NAME_CHAR</p></th>
+<td></td>
+<td><p>varchar(2000)</p></td>
+<td><div class="line-block">
+<div class="line">修飾子の名称。</div>
+<div class="line">例: <cite>Medication Frequency</cite>, <cite>Medication Route</cite> など。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><a class="reference internal" href="#ssmix2-and-modifier-fields"><span class="std std-ref">下記を参照</span></a> 。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>MODIFIER_BLOB</p></th>
+<td></td>
+<td><p>text</p></td>
+<td><p>拡張情報を格納可能（しばしば未使用）。</p></td>
+<td><p>対応なし。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>UPDATE_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>レコード最終更新日時。</p></td>
+<td><p>SS-MIX2とは対応しない。</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>DOWNLOAD_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>データダウンロード日時。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>IMPORT_DATE</p></th>
+<td></td>
+<td><p>datetime</p></td>
+<td><p>データインポート日時。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>SOURCESYSTEM_CD</p></th>
+<td></td>
+<td><p>varchar(50)</p></td>
+<td><p>データソース識別子。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>UPLOAD_ID</p></th>
+<td></td>
+<td><p>int</p></td>
+<td><p>アップロード処理の識別子。</p></td>
+<td><p>SS-MIX2と対応しない。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="i2b2">
+<h2>修飾子のi2b2における使われ方<a class="headerlink" href="#i2b2" title="Link to this heading"></a></h2>
+<p><a class="reference internal" href="../observation_fact/observation_fact.html#how-to-use-modifier"><span class="std std-ref">こちら</span></a> を参照してください。</p>
+</section>
+<section id="ss-mix2">
+<span id="ssmix2-and-modifier-fields"></span><h2>SS-MIX2との対応<a class="headerlink" href="#ss-mix2" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">修飾子をSS-MIX2のどのフィールドに対応させるかは、下のように考えられます。</div>
+</div>
+<section id="id4">
+<h3>診断の修飾子<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">診断でおそらく最も一般的な修飾子は疑いフラグと思われます。</div>
+<div class="line">そのほかにも、「入院時」「手術時」などの修飾子、それから解決済みフラグなども考えられます。</div>
+<div class="line">関連しそうなSS-MIX2のフィールドを下に例示します。</div>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>修飾子</p></th>
+<th class="head"><p>メッセージ型</p></th>
+<th class="head"><p>フィールド</p></th>
+<th class="head"><p>i2b2実装例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>疑いフラグ</p></th>
+<td><p>PPR^ZD1</p></td>
+<td><p>PRB-13</p></td>
+<td><div class="line-block">
+<div class="line">MODIFIER_PATH: <cite>\Diagnosis\Provisional\</cite></div>
+<div class="line">MODIFIER_CD: <cite>DIAG:PROV</cite></div>
+<div class="line">NAME_CHAR: <cite>Provisional Status</cite></div>
+<div class="line">とし、OBSERVATION_FACTでは、</div>
+<div class="line"><cite>CONCEPT_CD = DIAG:PROV</cite>, <cite>NVAL_NUM = 1</cite> として格納する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id5">
+<h3>処方オーダーの修飾子<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">処方オーダーでよく使われる修飾子には、投与経路 (ROUTE)、投与量 (DOSE)、投与頻度 (FREQ) などがあります。</div>
+<div class="line">関連しそうなSS-MIX2のフィールドを下に例示します。</div>
+</div>
+<table class="docutils align-default" style="width: 800px">
+<thead>
+<tr class="row-odd"><th class="head stub"><p>修飾子</p></th>
+<th class="head"><p>メッセージ型</p></th>
+<th class="head"><p>フィールド</p></th>
+<th class="head"><p>i2b2実装例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>投与経路</p></th>
+<td><p>RDE^O11</p></td>
+<td><p>RXR-1</p></td>
+<td><div class="line-block">
+<div class="line">MODIFIER_PATH: <cite>\Medication\Route\</cite></div>
+<div class="line">MODIFIER_CD: <cite>MED:ROUTE</cite></div>
+<div class="line">NAME_CHAR: <cite>Medication Route</cite></div>
+<div class="line">とし、OBSERVATION_FACTでは、</div>
+<div class="line"><cite>CONCEPT_CD = MED:ROUTE</cite>, <cite>TVAL_CHAR</cite> に</div>
+<div class="line">使用者定義書「0162-投薬経路」より「PO（口）」</div>
+<div class="line">「AP （外用）」「SC（皮下）」などを格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>処方量 (DOSE)</p></th>
+<td><p>RDE^O11</p></td>
+<td><div class="line-block">
+<div class="line">処方オーダーはRXE-3 (一回あたりの投与量)、</div>
+<div class="line">注射オーダーはRXC-3 (一回あたりの投与量)。</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">MODIFIER_PATH: <cite>\Medication\Dose\</cite></div>
+<div class="line">MODIFIER_CD: <cite>MED:DOSE</cite></div>
+<div class="line">NAME_CHAR: <cite>Medication Dose</cite></div>
+<div class="line">とし、OBSERVATION_FACTでは、</div>
+<div class="line"><cite>CONCEPT_CD = MED:DOSE</cite>, <cite>NVAL_NUM</cite> に投与量を格納する。</div>
+<div class="line">なお、処方回数(〜回分)、処方日数(TQ1-6)や調剤量(RXE-10)は</div>
+<div class="line">OBSERVATION_FACTの`QUANTITY_NUM` の使用を使用するのか、</div>
+<div class="line">あるいは別の修飾子として扱うのかは運用次第と思われる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>投与頻度 (FREQ)</p></th>
+<td><p>RDE^O11</p></td>
+<td><p>TQ1-3 (繰り返しパターン)</p></td>
+<td><div class="line-block">
+<div class="line">MODIFIER_PATH: <cite>\Medication\Frequency\</cite></div>
+<div class="line">MODIFIER_CD: <cite>MED:FREQ</cite></div>
+<div class="line">NAME_CHAR: <cite>Medication Frequency</cite></div>
+<div class="line">とし、OBSERVATION_FACTでは、</div>
+<div class="line"><cite>CONCEPT_CD = MED:FREQ</cite>, <cite>TVAL_CHAR</cite> に</div>
+<div class="line">「処方オーダリ ングシステム用標準用法</div>
+<div class="line">『服用回数、服用のタイミングに関する標準用法マスタ』</div>
+<div class="line">（内服および外用編）」のコードを格納する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id6">
+<h2>参考文献<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
+<p>このページは主に <a class="reference external" href="https://community.i2b2.org/wiki/">i2b2 Community Wiki</a> の内容をもとに作成しました。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025–present, i2b2 Japan website contributors.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dockerの重要な設定について &mdash; i2b2-jp  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/custom_css.css?v=77e355b0" />
+
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.svg"/>
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">ホーム</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tables/tables.html">i2b2のテーブル一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../i2b2_cells/i2b2_cells.html">i2b2 CellとHiveについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual.html">各種実装マニュアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../links/links.html">役立つリンク集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms_of_use/terms_of_use.html">利用規約</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">i2b2-jp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Dockerの重要な設定について</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="docker">
+<h1>Dockerの重要な設定について<a class="headerlink" href="#docker" title="Link to this heading"></a></h1>
+<figure class="align-left">
+<img alt="Docker Logo" src="../../../../_images/docker-logo-blue.svg" style="width: 400px;" />
+</figure>
+<div class="line-block">
+<div class="line">i2b2サーバーの実装にあたって特に注意が必要なDockerの設定があります。このページでは、それらについて説明します。</div>
+<div class="line">* もしこれらについて十分にご存知であれば、このページは読み飛ばしてください。</div>
+</div>
+<section id="id1">
+<h2>問題 1. ルートパーティションの枯渇リスク<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">Dockerはデフォルトではimageおよびvolumeなどのデータをルートパーティションに保存します。i2b2に特有のことではなく、一般的にこれらのデータは通常かなり大きな容量になるため、対策をしないとルートパーティションが枯渇してシステムの重大な障害を引き起こす可能性があります。</div>
+<div class="line">i2b2サーバーでは、Postgresのデータベースが大きくなる可能性があるため、特に注意が必要です。</div>
+<div class="line">対策はいくつも方法が考えられますが、以下のいずれかの対策が簡単でかつ安全です。</div>
+</div>
+<section id="dockerdata-root">
+<h3>対策法: Dockerのdata-rootを変更する<a class="headerlink" href="#dockerdata-root" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">Dockerは <cite>data-root</cite> と呼ばれるパスにimageやvolumeなどのデータを保存します。デフォルトでは <cite>/var/lib/docker</cite> ですが、これを別のパーティションに変更することで、ルートパーティションの枯渇を防ぐことができます。</div>
+<div class="line">通常は以下のステップで変更できます。しかし、システムの構成やバージョンによっては異なる場合がありますので、詳細はDockerの公式ドキュメントなどを参照してください。</div>
+</div>
+<section id="step-1-docker-data-root">
+<h4>step 1. Docker data-root用のパーティションを用意する<a class="headerlink" href="#step-1-docker-data-root" title="Link to this heading"></a></h4>
+<div class="line-block">
+<div class="line">例えば、LVMやパーティションを新たに作成して、 <cite>/mnt/ext01/docker_data</cite> のようなパスにマウントします。十分な空き容量があることを確認してください。</div>
+<div class="line">これ以降、 <cite>/mnt/ext01/docker_data</cite> を <cite>data-root</cite> の例として説明します。実際行う場合は、ご自身のパスに置き換えてください。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>新しい <cite>data-root</cite> がシンボリックリンクの場合、エラーが発生することがあります。シンボリックリンクが必要な場合は、他の情報源を参照してください。</p></li>
+</ul>
+</div>
+</section>
+<section id="step-2-docker">
+<h4>step 2. Dockerを停止して既存のデータをマウントしたパーティションに移動する<a class="headerlink" href="#step-2-docker" title="Link to this heading"></a></h4>
+<div class="line-block">
+<div class="line">以下のコマンドを実行します。</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>docker
+sudo<span class="w"> </span>cp<span class="w"> </span>-ar<span class="w"> </span>/var/lib/docker<span class="w"> </span>/mnt/ext01/docker_data
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">これで、Dockerサービスを停止し、既存のデータを新しいパーティションにコピーします。</div>
+<div class="line">既存データがもう不要であれば、コピーの代わりに移動しても構いません。</div>
+</div>
+</section>
+<section id="step-3-etc-docker-daemon-jsondata-root">
+<h4>step 3. /etc/docker/daemon.jsonを編集してdata-rootを変更する<a class="headerlink" href="#step-3-etc-docker-daemon-jsondata-root" title="Link to this heading"></a></h4>
+<div class="line-block">
+<div class="line">/etc/docker/daemon.jsonが存在しない場合は、新たに作成します。もしすでに存在する場合は、追記します。以下の内容を追加してください。</div>
+</div>
+<blockquote>
+<div><div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;data-root&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/mnt/ext01/docker_data&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">すでに他の設定がある場合は、適宜カンマなどを追加して正しいJSON形式にしてください。</div>
+</div>
+</section>
+<section id="step-4-docker">
+<h4>step 4. Dockerを再起動する<a class="headerlink" href="#step-4-docker" title="Link to this heading"></a></h4>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>systemctl<span class="w"> </span>daemon-reload
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>docker
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="stop-5">
+<h4>stop 5. 動作確認<a class="headerlink" href="#stop-5" title="Link to this heading"></a></h4>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Docker Root Dir&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">これで、Dockerの <cite>data-root</cite> が新しいパーティションに変更されていることを確認してください。</div>
+<div class="line">そのほか、Dockerが正常に動作していることも確認してください。</div>
+<div class="line">もし元の <cite>/var/lib/docker</cite> がもう不要であれば、削除しても構いません。</div>
+</div>
+</section>
+</section>
+</section>
+<section id="dockeruwf">
+<h2>問題 2. Dockerコンテナがuwfを回避してしまう<a class="headerlink" href="#dockeruwf" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>以下の内容はあくまで一例であり、また網羅的なものではありません。</p></li>
+<li><p>実際の運用にあたっては、システム管理者やセキュリティ専門家と相談の上、適切な対策を講じてください。</p></li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line">これはセキュリティ上の大きな問題です。i2b2に特有のことではなく、一般的にDockerコンテナがホストのFirewallを回避してしまう問題です。i2b2では患者データを取り扱うため、特に注意が必要です。</div>
+</div>
+<div class="line-block">
+<div class="line">多くのLinuxディストリビューションでは、セキュリティ強化のために <cite>ufw</cite> (Uncomplicated Firewall) を使用することが一般的です。</div>
+<div class="line">しかし、Dockerはデフォルトで独自のiptablesルールを作成し、これは多くの場合 <cite>ufw</cite> のルールを回避してしまいます。</div>
+<div class="line">例えば、アプリケーションをポート番号8000で公開するためにufwでポート8000へルールを追加しても、Dockerコンテナが直接ホストのポート8000にバインドされている場合、ufwのルールは必ずしも適応されません。</div>
+<div class="line">これにより、意図しないアクセスが可能になるなど、セキュリティ上のリスクが生じます。特にPostgreSQLのデフォルトポート5432は攻撃の対象になった場合、患者データベースが漏出するリスクがあります。</div>
+</div>
+<div class="line-block">
+<div class="line">以下に、一般的な対策を3つ紹介します。プロダクトにおいては、これらの対策を組み合わせて使用することが推奨されます。</div>
+</div>
+<section id="postgreslocalhost">
+<h3>対策 1. Postgresなど、外部に公開する必要のないサービスはホストのlocalhostにバインドする<a class="headerlink" href="#postgreslocalhost" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">PostgreSQLは外部に公開する必要はありませんし、公開することは重大なリスクを伴います。</div>
+<div class="line">PostgreSQLのコンテナをホストのlocalhostにバインドすることで、外部からのアクセスを防ぐことができます。</div>
+</div>
+<div class="line-block">
+<div class="line">具体的には、 <cite>docker-compose.yml</cite> ファイルのPostgreSQLサービスの設定を以下のように設定します。</div>
+</div>
+<div class="line-block">
+<div class="line">下のような例では、意図せずPostgreSQLのポート5432が外部に公開されるリスクがあります。</div>
+</div>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">よくない例 (セキュリティリスクがある)❌</span><a class="headerlink" href="#id2" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">i2b2-data-pgsql</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;5432:5432&quot;</span><span class="w">  </span><span class="c1"># 5432が外部に公開されている</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">これを以下のように変更します。</div>
+</div>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">変更後の例 (安全) 🙆‍♂️</span><a class="headerlink" href="#id3" title="Link to this code"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">i2b2-data-pgsql</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:5432:5432&quot;</span><span class="w">  </span><span class="c1"># 5432をホストのlocalhostにバインド</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">これにより、PostgreSQLはホストのlocalhostからのみアクセス可能になり、外部からのアクセスは防止されます。docker-compose.ymlを確認し、適切に設定されていることを確認してください。</div>
+<div class="line">もしPostgreSQLデータベースに外部からどうしてもアクセスする必要がある場合は、</div>
+</div>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-L<span class="w"> </span><span class="m">5432</span>:127.0.0.1:5432<span class="w"> </span>user@remote-server-ip
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">のようにSSHトンネルを使用してポートフォワーディングを行い、セキュアにアクセスするなどの方法をとってください。</div>
+</div>
+</section>
+<section id="i2b2">
+<h3>対策 2. i2b2サーバーの前にロードバランサーやプロキシサーバーを配置する<a class="headerlink" href="#i2b2" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>GitHubリポジトリ <a class="reference external" href="https://github.com/yuakagi/i2b2-jp-docker">i2b2-jp-docker</a> では、Nginxをリバースプロキシとして設置しているはずです。</p></li>
+<li><p>しかしバージョンなどによっては異なる場合がありますので、プロキシサーバーの設定をご確認ください。</p></li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line">これは現在のウェブサービスでは一般的な構成です。</div>
+<div class="line">i2b2サーバーの前にロードバランサーやプロキシサーバーを配置し、これらに対してFirewallなどのルールを適用することを推奨します。</div>
+<div class="line">こうすることで、ネットワークに直接公開されるのはロードバランサーやプロキシサーバーのみとなり、ユーザーからのリクエストはこれらを経由してi2b2サーバーに到達します。したがって、i2b2サーバー自体は直接ネットワークに公開されないので、セキュリティが向上します。</div>
+<div class="line">例えば、Nginxをリバースプロキシとして使用し、Nginxに対してFirewallのルールを適用することが考えられます</div>
+</div>
+</section>
+<section id="iptablesdocker">
+<h3>対策 3. 外部公開のポートは、iptablesでDockerコンテナのトラフィックを制御する<a class="headerlink" href="#iptablesdocker" title="Link to this heading"></a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>対策 2.で説明するように、実際の運営ではアプリケーションポートは直接公開せず、プロキシサーバーやロードバランサーを使ってアクセス制御を行うことが一般的です。</p></li>
+<li><p>そのため、実際に公開するポートはプロキシサーバーなどのリッスンするポート（通常は80や443）に限定されることが多いです。</p></li>
+<li><p>80や443といったポートはそもそも一般公開されることを前提としているため、iptablesでのアクセス制御はしないことも多いです。</p></li>
+<li><p>このため、以下の対策 3. は、特に必要がある場合にのみ適用してください。</p></li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line">iptablesのDockerが提供する特別なチェイン <cite>DOCKER-USER</cite> にルールを追加し、不要なアクセスを遮断することが可能です。</div>
+<div class="line"><cite>DOCKER-USER</cite> チェインのルールは、Dockerが追加するNATルールよりも先に評価されるため、Dockerコンテナの公開ポートに対して確実にアクセス制御を行うことができます。</div>
+</div>
+<div class="line-block">
+<div class="line">例えば、ポート80でサーバーを公開する場合に、日本国外からのアクセスを遮断したいケースを考えます。</div>
+<div class="line">以下のようにiptablesでルールを追加することで、特定のポートに対して許可・拒否を制御できます。</div>
+</div>
+<blockquote>
+<div><div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">例: 80ポートに対するアクセス制御</span><a class="headerlink" href="#id4" title="Link to this code"></a></div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># まずすべてのアクセスを拒否する</span>
+sudo<span class="w"> </span>iptables<span class="w"> </span>-A<span class="w"> </span>DOCKER-USER<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">80</span><span class="w"> </span>-j<span class="w"> </span>DROP
+
+<span class="c1"># 信頼できるIPのみを許可する (例: 自分のオフィスIP)</span>
+sudo<span class="w"> </span>iptables<span class="w"> </span>-I<span class="w"> </span>DOCKER-USER<span class="w"> </span>-s<span class="w"> </span><span class="m">203</span>.0.113.25<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">80</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+
+<span class="c1"># 必要なら日本のIPレンジだけを許可する (jp.zoneにIPレンジリストを保存している場合)</span>
+<span class="k">for</span><span class="w"> </span>ip<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>cat<span class="w"> </span>jp.zone<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+<span class="w">  </span>sudo<span class="w"> </span>iptables<span class="w"> </span>-I<span class="w"> </span>DOCKER-USER<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="m">80</span><span class="w"> </span>-s<span class="w"> </span><span class="nv">$ip</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT
+<span class="k">done</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">また、作成したiptablesルールは <cite>iptables-save</cite> コマンドなどを使って保存し、再起動後も有効になるように設定してください。</div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025–present, i2b2 Japan website contributors.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dockerを使ってi2b2サーバーを構築する &mdash; i2b2-jp  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom_css.css?v=77e355b0" />
+
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.svg"/>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/logo.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">ホーム</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tables/tables.html">i2b2のテーブル一覧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../i2b2_cells/i2b2_cells.html">i2b2 CellとHiveについて</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual.html">各種実装マニュアル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../links/links.html">役立つリンク集</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../terms_of_use/terms_of_use.html">利用規約</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">i2b2-jp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Dockerを使ってi2b2サーバーを構築する</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dockeri2b2">
+<h1>Dockerを使ってi2b2サーバーを構築する<a class="headerlink" href="#dockeri2b2" title="Link to this heading"></a></h1>
+<figure class="align-left">
+<img alt="Docker Logo" src="../../../_images/docker-logo-blue.svg" style="width: 400px;" />
+</figure>
+<div class="line-block">
+<div class="line">Dockerを利用することで、複雑な設定を簡素化し、数分もあればi2b2サーバーを立ち上げられます。</div>
+<div class="line">i2b2がいくつか <a class="reference external" href="https://hub.docker.com/u/i2b2/">公式のDockerイメージ</a> を提供しています。これらを組み合わせて利用することで、i2b2サーバーを構築できます。</div>
+<div class="line">国内のユーザーがすぐにi2b2を実装できるように、GitHubリポジトリ <a class="reference external" href="https://github.com/yuakagi/i2b2-jp-docker">i2b2-jp-docker</a> を作成しました。ここでは、このリポジトリを利用してi2b2サーバーを構築する手順を説明します。</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>i2b2は継続的に開発が進んでおり、将来大幅に内容が変わる可能性があります。当面の間、このマニュアルは2025年8月時点での最新の <strong>i2b2 version 1.8.x</strong> を対象とし維持開発します。</p></li>
+<li><p>細かな設定が必要で、このリポジトリでは対応しきれない場合、 <a class="reference external" href="https://community.i2b2.org/wiki/">i2b2 Community Wiki</a> に詳細なinstallation guideが公開されていますので、そちらをご利用ください。</p></li>
+</ul>
+</div>
+<p>以下の手順通りにに進めば、i2b2サーバーを起動できます。</p>
+<section id="id1">
+<h2>1. システム要件とDockerのインストール<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h3>1-1. システム要件<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">Dockerの使用を前提とするため、比較的最近のdockerが対応していること以外に特別な要件はありません。</div>
+<div class="line">最低でも以下のスペックを推奨します。</div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>OS: Linux (Ubuntu 22.04.1 LTSでの動作を確認しています)</p></li>
+<li><p>CPU: 2コア以上</p></li>
+<li><p>メモリ: 4GB以上</p></li>
+<li><p>ストレージ: 100GB以上の空き容量 (主にPostgresのデータ保存用)</p></li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line">マシンのスペックはi2b2サーバーの利用規模に応じて、通常はこれより高いスペックが必要になります。ご利用の規模に応じて適切なスペックを選択してください。</div>
+</div>
+</section>
+<section id="id3">
+<h3>1-2. Dockerのインストール<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">Dockerは：</div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>Docker Engine: 28.2.2以降</p></li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line">を推奨します。これより古いDockerでも動作しますが、可能な限りDockerはこれ以降のバージョンを使用してください。</div>
+<div class="line">すでにDockerがインストールされている場合は、このステップは不要です。必要に応じてDockerのインストールやアップデートを行ってください。</div>
+</div>
+</section>
+<section id="id4">
+<h3>1-3. Dockerの設定確認<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">i2b2サーバー実装にあたって、Dockerについていくつか確認が望ましい項目があります。以下のページを一度ご覧ください。</div>
+</div>
+<p><a class="reference internal" href="important_docker_settings/important_docker_settings.html"><span class="doc">Dockerの重要な設定について</span></a></p>
+<div class="line-block">
+<div class="line">ご一読の上、必要に応じて設定を変更してください。</div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2>2. リポジトリのクローン<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">まず、必要なデータをダウンロードします。</div>
+</div>
+<section id="id6">
+<h3>2-1. i2b2-jp-dockerのリポジトリをクローンします。<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/your/working_dir
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/yuakagi/i2b2-jp-docker.git
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">ここで、/path/to/your/working_dirは、作業ディレクトリのパスに置き換えてください。</div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>3. 設定ファイルを編集<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">プロジェクトのル各種設定ファイルを、ご利用の環境に合わせて編集します。</div>
+</div>
+<section id="id8">
+<h3>3-1. 環境変数の設定<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">プロジェクトのルートディレクトリにある <cite>.env</cite> ファイルをテキストエディタで開きます。</div>
+<div class="line">ファイル内のコメントを参考にして、Postgresのユーザー名、パスワードなどの環境変数を適切に設定してください。</div>
+</div>
+</section>
+<section id="postgresql">
+<h3>3-2. PostgreSQLの基本設定<a class="headerlink" href="#postgresql" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">プロジェクトのルートディレクトリから`postgres/postgresql.conf` ファイルをテキストエディタで開きます。</div>
+<div class="line">これはPostgreSQLの設定ファイルです。デフォルトのままでも多くの場合は十分に機能するようになっておりますが、必要に応じて設定を変更してください。</div>
+</div>
+</section>
+<section id="id9">
+<h3>3-3. Dockerサービスの設定を確認<a class="headerlink" href="#id9" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">プロジェクトのルートディレクトリから <cite>docker-compose.yml</cite> ファイルをテキストエディタで開きます。</div>
+<div class="line">このファイルは基本的に変更しなくても動作するように調整されております。しかし、全ての環境において動作を保証するものではありません。一度内容を全てご確認いただき、必要に応じて設定を変更してください。</div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h2>4. Dockerサービスの開始<a class="headerlink" href="#id10" title="Link to this heading"></a></h2>
+<div class="line-block">
+<div class="line">いよいよi2b2サーバーを起動します。</div>
+</div>
+<div class="line-block">
+<div class="line">このステップでは以下の3つのDockerコンテナを起動します:</div>
+</div>
+<ul class="simple">
+<li><p>i2b2 Core Server (i2b2-core-server)</p></li>
+<li><p>i2b2 Web Client (i2b2-webclient)</p></li>
+<li><p>PostgreSQL Database (i2b2-data-pgsql)</p></li>
+<li><p>Nginx プロキシサーバー (i2b2-nginx)</p></li>
+</ul>
+<div class="line-block">
+<div class="line">これらが同じDockerネットワーク上で連携して動作します。PostgreSQLのデータベースの本体は`i2b2-data-pgsql`コンテナ内に存在します。</div>
+</div>
+<section id="id11">
+<h3>4-1. プロジェクトのルートディレクトリに移動します。<a class="headerlink" href="#id11" title="Link to this heading"></a></h3>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/path/to/your/working_dir/i2b2-jp
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">すでに移動している場合はこのステップは不要です。</div>
+</div>
+</section>
+<section id="id12">
+<h3>4-2. Dockerサービスを起動します。<a class="headerlink" href="#id12" title="Link to this heading"></a></h3>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</pre></div>
+</div>
+</div></blockquote>
+<div class="line-block">
+<div class="line">これにより、3つのコンテナがバックグラウンドで起動します。</div>
+<div class="line">ここでは <cite>-d</cite> オプションを使用して、コンテナをデタッチモードで起動していますが、オプションは適宜調整してください。</div>
+<div class="line">(ただ起動するのであれば、通常は <cite>-d</cite> オプションだけで十分です。)</div>
+</div>
+</section>
+<section id="wildfly">
+<h3>4-3. WildFlyサーバーが起動するまで待ちます。<a class="headerlink" href="#wildfly" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">通常は数分で起動が完了しますが、多少時間がかかるステップです。</div>
+<div class="line">consoleのログを確認して、全てのサービスが正常に起動したことを確認してください。</div>
+</div>
+</section>
+<section id="i2b2-web-client">
+<h3>4-4. i2b2 Web Clientにアクセスします。<a class="headerlink" href="#i2b2-web-client" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">Webブラウザを開き、以下のURLにアクセスします:</div>
+</div>
+<div class="line-block">
+<div class="line"><cite>http://&lt;your host IP or domain&gt;/webclient</cite></div>
+</div>
+<div class="line-block">
+<div class="line">i2b2 webclientのエンドポイントは、<cite>/webclient</cite> です。 <cite>&lt;your host IP or domain&gt;</cite> は、i2b2サーバーが稼働しているホストのIPアドレスまたはドメイン名に置き換えてください。</div>
+</div>
+<p>例えば、ホストのドメインが <cite>i2b2.example.com</cite> であれば、URLは <cite>http://i2b2.example.com/webclient</cite> となります。
+| 正常に起動していれば、i2b2 Web Clientのログイン画面が表示されます。</p>
+</section>
+<section id="id13">
+<h3>4-5. i2b2 Web Clientにログインします。<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<div class="line-block">
+<div class="line">ログイン画面が表示されたら、ログインしてみてください。デフォルトのユーザー名とパスワードは以下の通りです:</div>
+</div>
+<ul class="simple">
+<li><p>ユーザー名: <cite>demo</cite></p></li>
+<li><p>パスワード: <cite>demouser</cite></p></li>
+</ul>
+<div class="line-block">
+<div class="line">サイトアクセス時にこれらのユーザー名とパスワードが自動的に入力されるかもしれません。</div>
+<div class="line">ログインに成功すると、i2b2 Web Clientのダッシュボードが表示されます。</div>
+</div>
+</section>
+</section>
+<section id="id14">
+<h2>5. ユーザーの管理<a class="headerlink" href="#id14" title="Link to this heading"></a></h2>
+<blockquote>
+<div><p>サービスの初回起動時に幾つかのデフォルトユーザーが作成されます。セキュリティの観点から、これらのユーザーのパスワードを変更することが必須です。</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Adminユーザーでログインします。</p>
+<ul class="simple">
+<li><p>すでにログインしている場合は、一度ログアウトしてください。i2b2 ver 1.8.xであれば、画面右上のユーザーアイコンをクリックして表示されるメニューから「Logout」を選択します。</p></li>
+<li><p>再度ログイン画面が表示されたら、Adminユーザーの資格情報を使用してログインします:</p>
+<ul>
+<li><p>ユーザー名: <cite>i2b2</cite></p></li>
+<li><p>パスワード: <cite>demouser</cite></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Admin Dashboardを起動します</p>
+<ul class="simple">
+<li><p>管理者権限のあるユーザーでログインした場合のみ、この機能にアクセスできます。</p></li>
+<li><p>まず、webclient画面の中央上部の「Analysis Tools」をクリック。</p></li>
+<li><p>「Category」メニューから「ADMIN」を選択。</p></li>
+<li><p>すると、下部の選択肢に「Admin Dashboard」が表示されるので、これをクリックします。</p></li>
+<li><p>Admin Dashboardが起動します。</p></li>
+</ul>
+</li>
+<li><p>Adminユーザーのパスワードを変更します。</p>
+<ul class="simple">
+<li><p>Admin Dashboardのナビゲーションバーに「USERS」「PROJECTS」「HIVE」などのタブが表示されます。</p></li>
+<li><p>「USERS」タブをクリックすると、ユーザー管理画面が表示されます。(おそらく、最初から選択されています。）</p></li>
+<li><p>ユーザー一覧からユーザー名(User Name)が <a href="#id15"><span class="problematic" id="id16">`</span></a>i2b2`のユーザーを見つけ、編集アイコン(鉛筆マーク)をクリックします。これは現在ログインしているユーザーです。</p></li>
+<li><p>ユーザーの詳細画面が表示されるので、「Password」「Verify Password」フィールドを使って、新しいパスワードを入力します。</p></li>
+<li><p>変更を保存するために、画面下部の「SAVE」ボタンをクリックします。</p></li>
+<li><p>なお、このユーザーが永続的に必要になることはありません。他に管理者権限を持つユーザーを作成した後、このユーザーを削除しても問題ありません。(下の、新しいユーザーの作成を参照してください。)</p></li>
+</ul>
+</li>
+<li><p>他のデフォルトユーザーについても情報の変更を行います。</p>
+<ul class="simple">
+<li><p>同様の手順で、他のデフォルトユーザー(ユーザー名 <a href="#id17"><span class="problematic" id="id18">`</span></a>demo`など)についてもセキュリティのためにパスワードの変更を行います。</p></li>
+<li><p>これらのユーザーはデモ用に提供されているものであり。不要な場合は、削除してください。</p></li>
+<li><p>削除はユーザー右端のゴミ箱アイコンをクリックします。</p></li>
+</ul>
+</li>
+<li><p>新しいユーザーを作成します。</p>
+<ul class="simple">
+<li><p>必要であれば、新しいユーザーを作成してください。</p></li>
+<li><p>左上の「+ADD NEW USER」ボタンをクリックします。</p></li>
+<li><p>ユーザーの詳細画面が表示されるので、必要な情報を入力し、「SAVE」ボタンをクリックして新しいユーザーを作成します。</p></li>
+<li><p>なお、ユーザーフィールドの「Is Admin」をTrueに設定すると、管理者権限が付与されます。管理者権限を持つユーザーは、他のユーザーの管理やシステム設定の変更が可能です。必要に応じて設定してください。</p></li>
+</ul>
+</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025–present, i2b2 Japan website contributors.</p>
+  </div>
+
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
