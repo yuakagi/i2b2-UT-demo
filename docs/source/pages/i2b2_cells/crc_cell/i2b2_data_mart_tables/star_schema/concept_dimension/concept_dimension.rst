@@ -33,12 +33,11 @@ CONCEPT_DIMENSIONのテーブル定義
 
    - **必須列** は `CONCEPT_PATH`, `CONCEPT_CD`, `NAME_CHAR` の3つです。
    - UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_ID はi2b2に共通のメタ列です。
-   - **太字のカラム** は必須列です。
 
 .. warning::
 
    - **CONCEPT_PATH** は概念階層を表すために使用されます。重複があるとツリー構造が破壊されます。
-   - CONCEPT_PAHTを含め、i2b2で `_PATH` という場合、中身はバックスラッシュ `\\` で区切られた階層パスを意味します。スラッシュ `\/` ではないので注意してください。
+   - CONCEPT_PAHTを含め、i2b2で `_PATH` という場合、中身は **バックスラッシュ** `\\` で区切られた階層パスを意味します。スラッシュ `\/` ではないので注意してください。
 
 .. list-table::
    :header-rows: 1

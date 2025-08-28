@@ -33,7 +33,6 @@ OBSERVATION_FACTのテーブル定義
 
    - **複合主キー** : `ENCOUNTER_NUM`, `CONCEPT_CD`, `PATIENT_NUM`, `PROVIDER_ID`, `START_DATE`, `MODIFIER_CD`, `INSTANCE_NUM` の7列の組み合わせ。
    - UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_ID はi2b2に共通のデータ管理用メタ列です。
-   - **太字のカラム** は必須列です。
 
 .. warning::
 

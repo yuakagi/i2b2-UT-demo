@@ -31,7 +31,6 @@ PATIENT_DIMENSIONのテーブル定義
    
    - RACE_CDやSEX_CDなどの_CDで終わる列は、コード型の値をとります。 **これらの列で使うコード体系はOntology CellのDBスキーマであるmetadata内のテーブルで管理します。**
    - UPDATE_DATE, DOWNLOAD_DATE, IMPORT_DATE, SOURCESYSTEM_CD, UPLOAD_IDの５つの列は、i2b2の多くのテーブルで共通のデータ管理用の列です。
-   - **太字のカラム** は必須列です。
 
 .. warning::
    
