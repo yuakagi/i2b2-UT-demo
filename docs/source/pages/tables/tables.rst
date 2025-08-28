@@ -2,8 +2,8 @@
 i2b2の様々なテーブルについて
 ***********************************
 
-.. figure:: /_static/images/common_images/illustrations/bees_and_hive.svg
-   :alt: i2b2 Hive and Cells
+.. figure:: /_static/images/common_images/illustrations/tables.svg
+   :alt: i2b2 tables icon
    :width: 200px
    :align: center
 
@@ -18,7 +18,7 @@ i2b2の様々なテーブルについて
 
 .. figure:: /_static/images/common_images/illustrations/data_analysis.svg
    :alt: Data Repository Cell (CRC)
-   :width: 200px
+   :width:  100px
    :align: center
 
    CRC Cellは臨床レコードを管理するCellです。

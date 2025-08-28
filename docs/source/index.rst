@@ -41,7 +41,7 @@ i2b2 Japanへようこそ
    :caption: 目次:
 
    ホーム <self>
-   i2b2のテーブル一覧 <tables/tables>
+   i2b2のテーブル一覧 <pages/tables/tables>
    i2b2 CellとHiveについて <pages/i2b2_cells/i2b2_cells>
    各種実装マニュアル <pages/manual/manual>
    役立つリンク集 <pages/links/links>
