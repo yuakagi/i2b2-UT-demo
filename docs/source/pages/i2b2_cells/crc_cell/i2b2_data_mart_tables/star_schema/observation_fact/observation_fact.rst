@@ -70,7 +70,7 @@ OBSERVATION_FACTのテーブル定義
      - PK
      - varchar(50)
      - | `PROVIDER_DIMENSION` の `PROVIDER_ID` と外部キーで関連付けられる。
-       |実施者（医療者・診療科等）の識別子。Null不可。
+       | 実施者（医療者・診療科等）の識別子。Null不可。
      - | i2b2内での医療提供者識別子を示すもの。
        | SS-MIX2のデータ項目とは直接対応しないが、
        | 一貫したルールを定めれば
@@ -111,7 +111,7 @@ OBSERVATION_FACTのテーブル定義
    * - VALTYPE_CD
      - 
      - varchar(50)
-     - 値の形式。  
+     - | 値の形式。  
        | N = 数値型  T = 文字列 (列挙型/短文)など
        | 詳細は :ref:`ページ下の表 <valtype_cd_values>` を参照。
        | B = 生のテキスト（長文/レポート等）
@@ -197,7 +197,8 @@ OBSERVATION_FACTのテーブル定義
      - 
      - text
      - | 生データ/長文/その他を格納
-       | 多くの場合、暗号化したPHI(Protected Health Information、保護対象医療情報)
+       | 多くの場合、暗号化したPHI
+       | (Protected Health Information、保護対象医療情報)
        | を格納。
      - | SS-MIX2で特に対応するフィールドはない。
    * - UPDATE_DATE
