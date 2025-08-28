@@ -29,10 +29,21 @@ services:
       # (⚠️ Postgresのデータをクリアしたい場合は、docker volumeを削除してください。)
       - i2b2-postgres-data:/var/lib/postgresql/data
       - i2b2-postgres-logs:/var/log/postgresql
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER} -d ${I2B2_DB_NAME} -h localhost",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
     # Postgresのポート設定
     ports:
       # ホストからのアクセスのみに制限します。
-      - 127.0.0.1:5432:5432 
+      - 127.0.0.1:5432:5432
       # ⚠️ 外部から接続する必要がある場合は、以下に置き換え。(開発時のみ。プロダクトでは5432は公開しない。)
       # - 5432:5432
     networks:
@@ -45,6 +56,12 @@ services:
     image: i2b2/i2b2-core-server:${I2B2_CORE_SERVER_TAG}
     container_name: i2b2-core-server
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/i2b2/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s # WildFly can take a while
     environment:
       # NOTE: ユーザーが変更することを想定しない環境変数は.envでなく、ここで指定しています。
       # i2b2のデータベースタイプ (i2b2自体はmysqlやoracleも対応しますが、ここではpostgresを使用します。変更しないでください。)
@@ -91,15 +108,19 @@ services:
     networks:
       - i2b2-net
     depends_on:
-      - i2b2-data-pgsql
+      i2b2-data-pgsql:
+        condition: service_healthy
 
   # ––––––––––––––––––––––––––––––––––––––––––
   # i2b2-wbclientのコンテナ定義
   # ––––––––––––––––––––––––––––––––––––––––––
   i2b2-webclient:
-    image: i2b2/i2b2-webclient:${I2B2_WEBCLIENT_TAG}
+    build:
+      context: ./webclient
+      dockerfile: Dockerfile
+      args:
+        I2B2_WEBCLIENT_TAG: ${I2B2_WEBCLIENT_TAG}
     container_name: i2b2-webclient
-    restart: unless-stopped
     # WebClientのポート設定
     # ‼️ Nginxをリバースプロキシとして使用するため、docker network内で80番のみExposeし、ホストには公開しません。
     expose:
@@ -108,8 +129,16 @@ services:
     # ports:
     #  - 8000:80"
     command: /run-httpd.sh localhost
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/webclient/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
     depends_on:
-      - i2b2-core-server
+      i2b2-core-server:
+        condition: service_healthy
     networks:
       - i2b2-net
 
@@ -130,12 +159,19 @@ services:
       # ⚠️ HTTPSはサポートしません。もし必要な場合も、このNGINXサーバーでTLS設定を行うのはあまり現実的ではありません。
       #    HTTPSを使用する場合は、AWSのALBなどの外部サービスでHTTPS終端を行い、それ以降はHTTPでこのサービスに接続することが安全かつ現実的です。
       #    その場合、NGINXのconfファイルを適切に調整してください (例: X-Forwarded-Protoヘッダー、クライアントIP取得の設定など)。
-      - "80:8080" 
+      - "80:8080"
     volumes:
       # NGINXのログをホストに保存する
       - i2b2-nginx-logs:/var/log/nginx
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
     depends_on:
-      - i2b2-webclient
+      i2b2-webclient:
+        condition: service_healthy
     networks:
       - i2b2-net
 
