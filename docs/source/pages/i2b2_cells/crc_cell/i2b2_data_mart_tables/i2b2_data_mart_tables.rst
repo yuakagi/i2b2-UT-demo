@@ -45,9 +45,10 @@ i2b2 Data Martとそのテーブルについて
 |     患者の基本情報を保存します。患者ID、性別、生年月日、死亡情報などが含まれます。
 | :doc:`CONCEPT_DIMENSION </pages/i2b2_cells/crc_cell/i2b2_data_mart_tables/star_schema/concept_dimension/concept_dimension>` 
 |     医療概念・オントロジー（診断、処方、検査コードなど）を保存します。各概念のコード、名称、階層情報など。
+| :doc:`MODIFIER_DIMENSION </pages/i2b2_cells/crc_cell/i2b2_data_mart_tables/star_schema/modifier_dimension/modifier_dimension>`
+|     事象に付加情報を提供する修飾子を保存します。
 | `VISIT_DIMENSION`: 患者の受診情報を保存します。受診日時、病院コード、診療科コードなどが含まれます。
 | `PROVIDER_DIMENSION`: 医療提供者（医師、看護師など）の情報を保存します。提供者ID、名前、所属など。
-| `MODIFIER_DIMENSION`: 事象に付加情報を提供する修飾子を保存します。
 
 
 

@@ -123,7 +123,7 @@ services:
   # i2b2-webclientはApacheで動作していますが、リバースプロキシとしてnginxを使用して、HTTP/HTTPSの終端を行います。
   i2b2-nginx:
     build:
-      context: ./nginx
+      context: ./reverse_proxy
       dockerfile: Dockerfile
     container_name: i2b2-nginx
     ports:

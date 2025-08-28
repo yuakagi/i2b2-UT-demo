@@ -7,12 +7,12 @@ OBSERVATION_FACTテーブルについて
    :width: 200px
    :align: center
    
-   `OBSERVATION_FACT` はStar Schemaの中心で、臨床観測値データを保存します。
+   `OBSERVATION_FACT` はスタースキーマのファクトテーブルで、臨床観測値データを保存します。
 
 OBSERVATION_FACTの役割は？
 ==========================
 
-| Star Schemaにおける **ファクトテーブル** です。
+| スタースキーマにおける **ファクトテーブル** です。
 | 1行が「患者の1回の受診(visit)中に記録された1つの観測値」を表します。
 | ほとんどのクエリは、OBSERVATION_FACT と1つ以上のディメンション・テーブル（PATIENT_DIMENSION、VISIT_DIMENSION、PROVIDER_DIMENSION、CONCEPT_DIMENSION、MODIFIER_DIMENSION）を結合して実行します。
 

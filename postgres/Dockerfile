@@ -12,7 +12,7 @@ FROM i2b2/i2b2-data-pgsql:${I2B2_DATA_PGSQL_TAG}
 
 # Postgresの追加設定ファイルをコンテナにコピー
 # (/etc/postgresql/16/main/conf.dはtag=v1.8.1a-20250421で存在を確認しています。違うimageを使う場合は、一応確認してください。)
-COPY custom_postgres.conf /etc/postgresql/16/main/conf.d/custom_postgres.conf
+COPY custom_postgresql.conf /etc/postgresql/16/main/conf.d/custom_postgresql.conf
 
 # Postgresのログ保存用ディレクトリを作成
 RUN mkdir -p /var/log/postgresql
