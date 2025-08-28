@@ -96,7 +96,7 @@ OBSERVATION_FACTのテーブル定義
        | 対応する値（ DOSEでは「100」mg、ROUTEでは「PO」など）はしばしば
        | `TVAL_CHAR` / `NVAL_NUM` などの値列に格納される。
        | 修飾子がない場合はNULL。
-       | 使い方は `ページ下の例 <modifier_usage>` を参照。
+       | 使い方は `ページ下の例 <how_to_use_modifier>` を参照。
      - | `MODIFIER_DIMENSION`を参照。
    * - **INSTANCE_NUM**
      - PK
@@ -106,7 +106,7 @@ OBSERVATION_FACTのテーブル定義
        | 適応する場合、各行は異なる `MODIFIER_CD` を持ち、
        | 関連行は同じ `INSTANCE_NUM` をもつ。
        | 修飾子がない場合はNULL。
-       | 使い方は `ページ下の例 <modifier_usage>` を参照。
+       | 使い方は `ページ下の例 <how_to_use_modifier>` を参照。
      - | i2b2独自。
    * - VALTYPE_CD
      - 
@@ -228,7 +228,7 @@ OBSERVATION_FACTのテーブル定義
      - アップロード処理の識別子。
      - SS-MIX2と対応しない。
 
-.. _modifier_usage:
+.. _how_to_use_modifier:
 
 修飾子(modifier)の使い方は？
 ==========================

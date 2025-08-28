@@ -7,7 +7,7 @@ MODIFIER_DIMENSIONテーブルについて
    :width: 200px
    :align: center
 
-   `MODIFIER_DIMENSION` は観測値に付随する修飾子を階層構造で管理します。
+   `MODIFIER_DIMENSION` は処方量、投与経路など修飾子を管理します。
 
 MODIFIER_DIMENSIONの役割は？
 ============================
@@ -54,7 +54,7 @@ MODIFIER_DIMENSIONのテーブル定義
        |    `\\Medication\\Route\\`
        | **バックスラッシュ** `\\` を使ってください。スラッシュ `\/` ではありません。
        | PKです。 **ユニーク制限があります**。
-     - | 
+     - | :ref:`下記を参照 <ssmix2_and_modifier_fields>` 。
    * - MODIFIER_CD
      - 
      - varchar(50)
@@ -64,13 +64,13 @@ MODIFIER_DIMENSIONのテーブル定義
        | 前半は修飾子の大分類、後半は小分類を表す
        | ことが慣例のようですが、単純に1や2などの
        | 数字などのこともあります。
-     - | 
+     - | :ref:`下記を参照 <ssmix2_and_modifier_fields>` 。
    * - NAME_CHAR
      - 
      - varchar(2000)
      - | 修飾子の名称。  
        | 例: `Medication Frequency`, `Medication Route` など。
-     - | 
+     - | :ref:`下記を参照 <ssmix2_and_modifier_fields>` 。
    * - MODIFIER_BLOB
      - 
      - text
@@ -102,6 +102,14 @@ MODIFIER_DIMENSIONのテーブル定義
      - アップロード処理の識別子。
      - SS-MIX2と対応しない。
 
+修飾子のi2b2における使われ方
+===========================
+
+:ref:`こちら <how_to_use_modifier>` を参照してください。
+
+
+.. _ssmix2_and_modifier_fields:
+
 SS-MIX2との対応
 ================
 
@@ -118,13 +126,13 @@ SS-MIX2との対応
    :stub-columns: 1
    :width: 800px
     
-   * - メッセージ型
+   * - 修飾子
+     - メッセージ型
      - フィールド
-     - 説明
      - i2b2実装例
-   * - PPR^ZD1
+   * - 疑いフラグ
+     - PPR^ZD1
      - PRB-13
-     - 疑いフラグ (1:疑い)
      - | MODIFIER_PATH: `\\Diagnosis\\Provisional\\`
        | MODIFIER_CD: `DIAG:PROV`
        | NAME_CHAR: `Provisional Status`
@@ -141,13 +149,13 @@ SS-MIX2との対応
    :stub-columns: 1
    :width: 800px
     
-   * - メッセージ型
+   * - 修飾子
+     - メッセージ型
      - フィールド
-     - 説明
      - i2b2実装例
-   * - RDE^O11
+   * - 投与経路
+     - RDE^O11
      - RXR-1
-     - 投与経路
      - | MODIFIER_PATH: `\\Medication\\Route\\`
        | MODIFIER_CD: `MED:ROUTE`
        | NAME_CHAR: `Medication Route`
@@ -155,10 +163,10 @@ SS-MIX2との対応
        | `CONCEPT_CD = MED:ROUTE`, `TVAL_CHAR` に
        | 使用者定義書「0162-投薬経路」より「PO（口）」
        | 「AP （外用）」「SC（皮下）」などを格納する。
-   * - RDE^O11
+   * - 処方量 (DOSE)
+     - RDE^O11
      - | 処方オーダーはRXE-3 (一回あたりの投与量)、
        | 注射オーダーはRXC-3 (一回あたりの投与量)。
-     - 処方量 (DOSE)
      - | MODIFIER_PATH: `\\Medication\\Dose\\`
        | MODIFIER_CD: `MED:DOSE`
        | NAME_CHAR: `Medication Dose`
@@ -167,9 +175,9 @@ SS-MIX2との対応
        | なお、処方回数(〜回分)、処方日数(TQ1-6)や調剤量(RXE-10)は
        | OBSERVATION_FACTの`QUANTITY_NUM` の使用を使用するのか、
        | あるいは別の修飾子として扱うのかは運用次第と思われる。
-   * - RDE^O11
+   * - 投与頻度 (FREQ)
+     - RDE^O11
      - TQ1-3 (繰り返しパターン)
-     - 投与頻度 (FREQ)
      - | MODIFIER_PATH: `\\Medication\\Frequency\\`
        | MODIFIER_CD: `MED:FREQ`
        | NAME_CHAR: `Medication Frequency`
