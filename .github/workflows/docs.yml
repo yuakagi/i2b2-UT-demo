@@ -7,8 +7,9 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
+  # 以下権限は通常不要。必要なら追加してください。
+  # pages: write
+  # id-token: write
 
 jobs:
   build:
@@ -17,18 +18,19 @@ jobs:
     steps:
       # リポジトリのチェックアウト
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Pythonのセットアップ (Sphinxを使うため。)
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
 
       # ドキュメンテーションをビルドするための依存関係をインストール (Sphinxを使います。)
       - name: Install docs dependencies
         run: |
-          pip install sphinx sphinx-rtd-theme myst_parser
+          pip install sphinx sphinx-rtd-theme myst-parser
 
       # ドキュメンテーションのビルド
       - name: Build docs
@@ -48,3 +50,4 @@ jobs:
           publish_dir: docs/build/html
           publish_branch: gh-pages
           force_orphan: true
+          commit_message: "docs: deploy ${{ github.sha }}"

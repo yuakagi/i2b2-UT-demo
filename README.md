@@ -1,50 +1,17 @@
-# i2b2-UT-demo
+# i2b2 Japan website
 
-### Attributions
+このリポジトリは、i2b2 に関する日本語ドキュメントを提供することを目的としています。
 
-This project is derived from the open-source repository: i2b2/i2b2-docker (https://github.com/i2b2/i2b2-docker)
-The original code is licensed under the Apache License 2.0.
-This repository includes modifications and extensions for research and deployment purposes.
+## ウェブサイトの構成
 
-## Clone repo
+このウェブサイトは、デプロイを簡単にするために、Python の静的サイトジェネレーターである Sphinx を使用しています。
+それぞれのページは、reStructuredText（.rst）形式で書かれており、Sphinx によって HTML に変換されデプロイされます。
+/docs/source/pages の中に.rst ファイルおよびページ内の画像ファイルなどが配置されています。基本的に、/pages のディレクトリツリーがそのままウェブサイトのディレクトリツリーになるように設計されています。
+各ページには、svg 画像など関連ファイルが必要になることもあるので、基本的に１ページ１ディレクトリ構成にしています。例え rst ファイル単体だとしても、一貫性のために必ずディレクトリを作ってください。
+なお。/docs/source/\_static の中にさまざまな static files が配置されています。特に\_static/images には、ロゴなど共通で使う画像ファイルを配置しています。必要であれば、この画像をページ内で使ってください。
 
-git clone https://github.com/yuakagi/i2b2-UT-demo
+## デプロイ
 
-## Steps for Setting Up i2b2 Postgres (Ubuntu)
-
-1. Navigate to the i2b2-docker directory.
-2. Execute the following command to start the i2b2:
-
-```
-cd pg
-docker-compose up -d i2b2-webclient
-```
-
-3. Wait for WildFly to start.
-4. Open a web browser and navigate to the following URL:
-
-```
-http://<your host IP etc>/webclient
-```
-
-5. Log in to the i2b2 web application using the default credentials:
-      - Username: demo
-      - Password: demouser
-
-** Access to PostgreSQL DB **
-You can access to the DB by IP, port, username and password
-
-1. Expose the DB port in docker-compose.yml file.
-2. Access to the DB using your IP and port
-3. Authenticate with your username and password. The default user is 'i2b2' and password is 'demouser'.
-
-# Other notes (from the original repo)
-username is demo
-password is i2b2cdiDemo@2020
-
-# How to use Admin Site?
-1. Log in as an 'admin' user.
-   By default, the user ID is i2b2 and password is demouser.
-   Change the ID and passward in .env file for security.
-2. Click 'Analysis Tools', and select 'ADMIN' from the Category dropdown.
-3. Now, the Admin site is availabe as a plugin.
+.github/workflows/docs.yml によって、main ブランチに push されたときに自動的にデプロイされるようになっています。
+ただし、デプロイ先のブランチは gh-pages ブランチに設定されているので、main ブランチに push されたときに gh-pages ブランチが更新されるようになっています。(main の方には、ビルドされた HTML ファイルは含まれません。)
+リポジトリの Settings > Pages で、gh-pages ブランチがデプロイ先として設定されていることを確認してください。
